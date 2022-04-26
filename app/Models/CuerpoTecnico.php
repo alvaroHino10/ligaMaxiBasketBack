@@ -11,9 +11,10 @@ class CuerpoTecnico extends Model
 
     protected $table = 'cuerpotecnico';
     protected $primaryKey = 'codct';
+    public $timestamps = false;
     protected $fillable = [
         'nombrect',
-        'apellidoct',
+        'apellidct',
         'numidenct',
         'fechanacct',
         'telfct',

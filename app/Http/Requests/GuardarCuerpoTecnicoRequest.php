@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class GuardarCuerpoTecnicoRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'nombrect' => 'required',
+            'apellidct' => 'required',
+            'numidenct' => 'required|unique:cuerpotecnico,numidenct',
+            'fechanacct' => 'required',
+            'telfct' => 'required',
+            'sexoct' => 'required',
+            'rolct' => 'required',
+            'linkimgct' => 'required'
+            ];
+    }
+}
