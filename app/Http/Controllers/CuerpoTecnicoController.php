@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ActualizarCuerpoTecnicoRequest;
+
 use App\Http\Requests\GuardarCuerpoTecnicoRequest;
 use App\Models\CuerpoTecnico;
 use Illuminate\Http\Request;
@@ -57,7 +57,7 @@ class CuerpoTecnicoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ActualizarCuerpoTecnicoRequest $request, $id)
+    public function update(GuardarCuerpoTecnicoRequest $request, $id)
     {
         $cuerpoTecnico = CuerpoTecnico::find($id)->update($request->all());
         return response()->json([

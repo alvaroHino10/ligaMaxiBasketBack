@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ActualizarEquipoRequest;
+
 use App\Http\Requests\GuardarEquipoRequest;
 use App\Models\Equipo;
 use Illuminate\Http\Request;
@@ -57,7 +57,7 @@ class EquipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ActualizarEquipoRequest $request, $id)
+    public function update(GuardarEquipoRequest $request, $id)
     {
         $equipo = Equipo::find($id)->update($request->all());
         return response()->json([
