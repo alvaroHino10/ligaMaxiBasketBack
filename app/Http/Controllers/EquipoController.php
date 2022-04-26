@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ActualizarEquipoRequest;
 use App\Http\Requests\GuardarEquipoRequest;
 use App\Models\Equipo;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 class EquipoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra un listado de todos los registros de la tabla.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,7 +21,7 @@ class EquipoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Permite crear y guardar un nuevo registro en la tabla.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -35,36 +36,48 @@ class EquipoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Permite mostrar los datos de un especifico registro con la respectiva id
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $equipo = Equipo::find($id);
+        return response()->json([
+            'confirmacion' => true,
+            'cuerpotecnico' => $equipo
+        ],200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Permite actulizar los datos del registro relacionado a la variable id de la tabla.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ActualizarEquipoRequest $request, $id)
     {
-        //
+        $equipo = Equipo::find($id)->update($request->all());
+        return response()->json([
+            'confirmacion' => true,
+            'mensaje' => 'Datos del equipo actualizados correctamente'
+        ],201);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el registro con el codigo id de la tabla.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $equipo = Equipo::find($id)->delete();
+        return response()->json([
+            'confirmacion' => true,
+            'mensaje' => 'Equipo eliminado'
+        ],200);
     }
 }
