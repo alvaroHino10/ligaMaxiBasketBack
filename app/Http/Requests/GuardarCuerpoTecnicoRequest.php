@@ -32,6 +32,6 @@ class GuardarCuerpoTecnicoRequest extends FormRequest
             'sexoct' => 'required',
             'rolct' => 'required',
             'linkimgct' => 'required'
-            ];
+        ];
     }
 }
