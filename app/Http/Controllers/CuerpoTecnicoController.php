@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 class CuerpoTecnicoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra un listado de todos los registros de la tabla.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function index()
     {
@@ -21,7 +21,7 @@ class CuerpoTecnicoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Permite crear y guardar un nuevo registro en la tabla.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -36,7 +36,7 @@ class CuerpoTecnicoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Permite mostrar los datos de un especifico registro con la respectiva id
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -51,7 +51,7 @@ class CuerpoTecnicoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Permite actulizar los datos del registro relacionado a la variable id de la tabla.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -68,8 +68,8 @@ class CuerpoTecnicoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Elimina el registro con el codigo id de la tabla.
+     * 
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
