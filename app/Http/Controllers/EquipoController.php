@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Requests\GuardarCuerpoTecnicoRequest;
-use App\Models\CuerpoTecnico;
+use App\Http\Requests\GuardarEquipoRequest;
+use App\Models\Equipo;
 use Illuminate\Http\Request;
 
-class CuerpoTecnicoController extends Controller
+class EquipoController extends Controller
 {
     /**
      * Muestra un listado de todos los registros de la tabla.
      *
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $listaCuerpoTecnico = CuerpoTecnico::all();
-        return response($listaCuerpoTecnico);
+        $listaEquipos = Equipo::all();
+        return response($listaEquipos);
     }
 
     /**
@@ -26,12 +26,12 @@ class CuerpoTecnicoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GuardarCuerpoTecnicoRequest $request)
+    public function store(GuardarEquipoRequest $request)
     {
-        CuerpoTecnico::create($request->all());
+        Equipo::create($request->all());
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Personal del cuerpo tecnico guardado correctamente'
+            'mensaje' => 'Equipo guardado correctamente'
         ],201);
     }
 
@@ -43,10 +43,10 @@ class CuerpoTecnicoController extends Controller
      */
     public function show($id)
     {
-        $cuerpoTecnico = CuerpoTecnico::find($id);
+        $equipo = Equipo::find($id);
         return response()->json([
             'confirmacion' => true,
-            'cuerpotecnico' => $cuerpoTecnico
+            'cuerpotecnico' => $equipo
         ],200);
     }
 
@@ -57,28 +57,27 @@ class CuerpoTecnicoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GuardarCuerpoTecnicoRequest $request, $id)
+    public function update(GuardarEquipoRequest $request, $id)
     {
-        $cuerpoTecnico = CuerpoTecnico::find($id)->update($request->all());
+        $equipo = Equipo::find($id)->update($request->all());
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Datos del cuerpo tecnico actualizados correctamente'
+            'mensaje' => 'Datos del equipo actualizados correctamente'
         ],201);
-        
     }
 
     /**
      * Elimina el registro con el codigo id de la tabla.
-     * 
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $cuerpoTecnico = CuerpoTecnico::find($id)->delete();
+        $equipo = Equipo::find($id)->delete();
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Personal del cuerpo tecnico eliminado'
+            'mensaje' => 'Equipo eliminado'
         ],200);
     }
 }
