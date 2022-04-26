@@ -32,7 +32,7 @@ class CuerpoTecnicoController extends Controller
         return response()->json([
             'confirmacion' => true,
             'mensaje' => 'Personal del cuerpo tecnico guardado correctamente'
-        ],200);
+        ],201);
     }
 
     /**
@@ -63,7 +63,7 @@ class CuerpoTecnicoController extends Controller
         return response()->json([
             'confirmacion' => true,
             'mensaje' => 'Datos del cuerpo tecnico actualizados correctamente'
-        ],200);
+        ],201);
         
     }
 
