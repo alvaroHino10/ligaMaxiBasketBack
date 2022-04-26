@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ActualizarCuerpoTecnicoRequest;
 use App\Http\Requests\GuardarCuerpoTecnicoRequest;
 use App\Models\CuerpoTecnico;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class CuerpoTecnicoController extends Controller
         return response()->json([
             'confirmacion' => true,
             'mensaje' => 'Personal del cuerpo tecnico guardado correctamente'
-        ]);
+        ],200);
     }
 
     /**
@@ -42,7 +43,11 @@ class CuerpoTecnicoController extends Controller
      */
     public function show($id)
     {
-        //
+        $cuerpoTecnico = CuerpoTecnico::find($id);
+        return response()->json([
+            'confirmacion' => true,
+            'cuerpotecnico' => $cuerpoTecnico
+        ],200);
     }
 
     /**
@@ -52,9 +57,14 @@ class CuerpoTecnicoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ActualizarCuerpoTecnicoRequest $request, $id)
     {
-        //
+        $cuerpoTecnico = CuerpoTecnico::find($id)->update($request->all());
+        return response()->json([
+            'confirmacion' => true,
+            'mensaje' => 'Datos del cuerpo tecnico actualizados correctamente'
+        ],200);
+        
     }
 
     /**
@@ -65,6 +75,10 @@ class CuerpoTecnicoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cuerpoTecnico = CuerpoTecnico::find($id)->delete();
+        return response()->json([
+            'confirmacion' => true,
+            'mensaje' => 'Personal del cuerpo tecnico eliminado'
+        ],200);
     }
 }

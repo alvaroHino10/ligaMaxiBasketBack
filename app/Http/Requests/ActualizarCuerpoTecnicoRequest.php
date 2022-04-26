@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GuardarCuerpoTecnicoRequest extends FormRequest
+class ActualizarCuerpoTecnicoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,6 +32,6 @@ class GuardarCuerpoTecnicoRequest extends FormRequest
             'sexoct' => 'required',
             'rolct' => 'required',
             'linkimgct' => 'required'
-            ];
+        ];
     }
 }
