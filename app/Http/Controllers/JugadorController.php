@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GuardarPreInscripcionRequest;
-use App\Models\PreInscripcion;
+use App\Http\Requests\GuardarJugadorRequest;
+use App\Models\Jugador;
+use Illuminate\Http\Request;
 
-class PreInscripcionController extends Controller
+class JugadorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class PreInscripcionController extends Controller
      */
     public function index()
     {
-        $listaPreInscripciones = PreInscripcion::all();
-        return response($listaPreInscripciones);
+        $jugador = Jugador::all();
+        return response($jugador, 200);
     }
 
     /**
@@ -24,13 +25,13 @@ class PreInscripcionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GuardarPreInscripcionRequest $request)
+    public function store(GuardarJugadorRequest $request)
     {
-        PreInscripcion::create($request->all());
+        Jugador::create($request->all());
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Pre inscripcion guardada con exito',
-        ], 201);
+            'mensaje' => 'Jugador guardado correctamente'
+        ],201);
     }
 
     /**
@@ -41,11 +42,11 @@ class PreInscripcionController extends Controller
      */
     public function show($id)
     {
-        $preInscripcion = PreInscripcion::find($id);
+        $jugador = Jugador::find($id);
         return response()->json([
             'confirmacion' => true,
-            'pre inscripcion' => $preInscripcion
-        ], 200);
+            'cuerpotecnico' => $jugador
+        ],200);
     }
 
     /**
@@ -55,13 +56,13 @@ class PreInscripcionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GuardarPreInscripcionRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $preInscripcion = PreInscripcion::find($id)->update($request->all());
+        $jugador = Jugador::find($id)->update($request->all());
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Datos de la preinscripcion actualizados correctamente'
-        ], 201);
+            'mensaje' => 'Datos del jugador actualizados correctamente'
+        ],201);
     }
 
     /**
@@ -72,10 +73,10 @@ class PreInscripcionController extends Controller
      */
     public function destroy($id)
     {
-        $preInscripcion = PreInscripcion::find($id)->delete();
+        $jugador = Jugador::find($id)->delete();
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Pre inscripcion eliminada'
-        ], 200);
+            'mensaje' => 'Jugador eliminado'
+        ],200);
     }
 }
