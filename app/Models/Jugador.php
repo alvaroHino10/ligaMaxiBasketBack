@@ -10,21 +10,23 @@ class Jugador extends Model
     use HasFactory;
 
     protected $table = 'jugador';
-    protected $primaryKey = 'codjug';
+    protected $primaryKey = 'cod_jug';
     public $timestamps = false;
     protected $fillable = [
-        'nombrejug',
-        'primapjug',
-        'segapjug',
-        'correojug',
-        'numidentjug',
-        'nacionjug',
-        'estciviljug',
-        'fechanacjug',
-        'telfjug',
-        'sexojug',
-        'domjug',
-        'numequijug',
-        'linkimgjug'
+        'cod_jug',
+        'cod_equi',
+        'nombre_jug',
+        'prim_ap_jug',
+        'seg_ap_jug',
+        'correo_jug',
+        'num_iden_jug',
+        'nacion_jug',
+        'est_civil_jug',
+        'fecha_nac_jug',
+        'telf_jug',
+        'sexo_jug',
+        'dom_jug',
+        'num_equi_jug',
+        'link_img_jug'
     ];
 }

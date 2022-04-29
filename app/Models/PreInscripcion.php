@@ -10,13 +10,13 @@ class PreInscripcion extends Model
     use HasFactory;
 
     protected $table = 'preinscripcion';
-    protected $primaryKey = 'codpreinscrip';
+    protected $primaryKey = 'cod_preinscrip';
     public $timestamps = false;
     protected $fillable = [
-        'codequi',
-        'numtransfer',
-        'costopreinscrip',
-        'fechapreinscrip',
-        'linkimgcomprob',
+        'cod_preinscrip',
+        'num_transfer_preinscrip',
+        'costo_preinscrip',
+        'fecha_preinscrip',
+        'link_img_comprob',
     ];
 }
