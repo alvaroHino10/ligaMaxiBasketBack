@@ -25,7 +25,7 @@ class GuardarJugadorRequest extends FormRequest
     {
         return [
             'cod_jug' => 'required',
-            'cod_equip' => 'required',
+            'cod_equi' => 'required',
             'nombre_jug' => 'required',
             'prim_ap_jug' => 'required',
             'seg_ap_jug' => 'required',

@@ -27,9 +27,10 @@ class GuardarDelegadoRequest extends FormRequest
             'cod_deleg' => 'required',
             'cod_preinscrip' => 'required',
             'nombre_deleg' => 'required',
-            'ap_delegado' => 'required',
+            'ap_deleg' => 'required',
             'num_iden_deleg' => 'required',
-            'fecha_nac_delegado' => 'required',
+            'fecha_nac_deleg' => 'required',
+            'correo_deleg' => 'required',
             'telf_deleg' => 'required',
             'sexo_deleg' => 'required',
             'link_img_deleg' => 'required'
