@@ -10,6 +10,7 @@ class Delegado extends Model
     use HasFactory;
     protected $table = 'delegado';
     protected $primaryKey = 'cod_deleg';
+    public $timestamps = false;
     protected $fillable = [
         'cod_deleg',
         'cod_preinscrip',

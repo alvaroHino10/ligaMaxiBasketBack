@@ -11,6 +11,7 @@ class PreInscripcion extends Model
 
     protected $table = 'preinscripcion';
     protected $primaryKey = 'cod_preinscrip';
+    public $timestamps = false;
     protected $fillable = [
         'cod_preinscrip',
         'num_transfer_preinscrip',
