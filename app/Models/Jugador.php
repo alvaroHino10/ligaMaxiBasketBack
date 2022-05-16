@@ -11,7 +11,6 @@ class Jugador extends Model
 
     protected $table = 'jugador';
     protected $primaryKey = 'cod_jug';
-    public $timestamps = false;
     protected $fillable = [
         'cod_jug',
         'cod_equi',
