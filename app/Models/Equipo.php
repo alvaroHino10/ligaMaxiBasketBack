@@ -9,8 +9,7 @@ class Equipo extends Model
 {
     use HasFactory;
     protected $table = 'equipo';
-    protected $primaryKey = 'cod_equi';
-    public $timestamps = false;
+    protected $primaryKey = 'cod_equi';  
     protected $fillable = [
         'cod_equi',
         'cod_torn',
