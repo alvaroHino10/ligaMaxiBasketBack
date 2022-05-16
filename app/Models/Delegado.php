@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PreInscripcion extends Model
+class Delegado extends Model
 {
     use HasFactory;
-
-    protected $table = 'preinscripcion';
-    protected $primaryKey = 'cod_preinscrip';
+    protected $table = 'delegado';
+    protected $primaryKey = 'cod_deleg';
     public $timestamps = false;
     protected $fillable = [
+        'cod_deleg',
         'cod_preinscrip',
-        'num_transfer_preinscrip',
-        'costo_preinscrip',
-        'fecha_preinscrip',
-        'link_img_comprob',
+        'nombre_deleg',
+        'ap_deleg',
+        'correo_deleg',
+        'telf_deleg',
     ];
 }

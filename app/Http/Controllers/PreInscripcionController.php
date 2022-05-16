@@ -29,7 +29,7 @@ class PreInscripcionController extends Controller
         PreInscripcion::create($request->all());
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Pre inscripcion guardada con exito',
+            'mensaje' => 'Preinscripcion guardada con exito',
         ], 201);
     }
 
@@ -75,7 +75,7 @@ class PreInscripcionController extends Controller
         $preInscripcion = PreInscripcion::find($id)->delete();
         return response()->json([
             'confirmacion' => true,
-            'mensaje' => 'Pre inscripcion eliminada'
+            'mensaje' => 'Preinscripcion eliminada'
         ], 200);
     }
 }

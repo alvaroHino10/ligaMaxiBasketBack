@@ -9,13 +9,15 @@ class Equipo extends Model
 {
     use HasFactory;
     protected $table = 'equipo';
-    protected $primaryKey = 'codequi';
-    public $timestamps = false;
+    protected $primaryKey = 'cod_equi';  
     protected $fillable = [
-        'nombreequi',
-        'categequi',
-        'paisequi',
-        'discipequi',
-        'colorequi'
+        'cod_equi',
+        'cod_torn',
+        'cod_preinscrip',
+        'nombre_equi',
+        'categ_equi',
+        'pais_equi',
+        'discip_equi',
+        'color_equi'
     ];
 }
