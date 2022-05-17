@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GuardarPreInscripcionRequest;
 use App\Models\PreInscripcion;
+use Illuminate\Support\Facades\Storage;
 
 class PreInscripcionController extends Controller
 {
@@ -29,15 +30,13 @@ class PreInscripcionController extends Controller
         $data = $request->all();
         if ($request-> hasFile('link_img_comprob') && $request->file('link_img_comprob')->isValid()){
             $file      = $request->file('link_img_comprob');
-            $filename  = $file->getClientOriginalName();
-            $full_filename = pathinfo($filename, PATHINFO_FILENAME);
-            $extension = $file->getClientOriginalExtension();
-            $picture   = str_replace(' ', '_', $full_filename).'-'.rand().'_'.time().'.'.$extension;
+            $filename  = $file->hashName();
+            $extension = $file->extension();
+            $picture   = str_replace(' ', '_', $filename).'-'.rand().'_'.time().'.'.$extension;
             $path      = $file->storeAs('public/pre_inscripcion', $picture);
-            //$data['link_img_comprob'] = $picture;
-            $request->merge(['link_img_comprob' => $picture]);
+            $data['link_img_comprob'] = $picture;
         }
-        PreInscripcion::create($request->all());
+        PreInscripcion::create($data);
         return response()->json([
             'confirmacion' => true,
             'mensaje' => 'Preinscripcion guardada con exito',
