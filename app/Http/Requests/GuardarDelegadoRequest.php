@@ -24,7 +24,6 @@ class GuardarDelegadoRequest extends FormRequest
     public function rules()
     {
         return [
-            'cod_deleg' => 'required',
             'cod_preinscrip' => 'required',
             'nombre_deleg' => 'required',
             'ap_deleg' => 'required',
