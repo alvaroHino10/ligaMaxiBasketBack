@@ -11,7 +11,6 @@ class Equipo extends Model
     protected $table = 'equipo';
     protected $primaryKey = 'cod_equi';  
     protected $fillable = [
-        'cod_equi',
         'cod_torn',
         'cod_preinscrip',
         'nombre_equi',

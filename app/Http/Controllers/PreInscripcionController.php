@@ -26,6 +26,15 @@ class PreInscripcionController extends Controller
      */
     public function store(GuardarPreInscripcionRequest $request)
     {
+        $data = $request->all();
+        if ($request-> hasFile('image') && $request->file('image')->isValid()){
+            $file      = $request->file('image');
+            $filename  = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $picture   = str_replace(' ', '_', $filename).'-'.rand() . '_'.time(). '.'.$extension;
+            $path      = $file->storeAs('public/pre_inscripcion', $picture);
+            $data['link_img_comprob'] = $picture;
+        }
         PreInscripcion::create($request->all());
         return response()->json([
             'confirmacion' => true,
