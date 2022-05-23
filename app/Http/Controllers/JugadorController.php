@@ -54,7 +54,7 @@ class JugadorController extends Controller
         $jugador = Jugador::find($id);
         return response()->json([
             'confirmacion' => true,
-            'cuerpotecnico' => $jugador
+            'jugador' => $jugador
         ],200);
     }
 
