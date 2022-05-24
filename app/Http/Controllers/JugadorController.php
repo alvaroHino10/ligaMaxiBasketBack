@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GuardarJugadorRequest;
+use App\Models\Equipo;
 use App\Models\Jugador;
+use App\Models\Torneo;
 use Illuminate\Http\Request;
 
 class JugadorController extends Controller
@@ -27,20 +29,49 @@ class JugadorController extends Controller
      */
     public function store(GuardarJugadorRequest $request)
     {
-        $data      = $request->all();
-        if ($request-> hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()){ 
-            $file      = $request->file('link_img_jug');
-            $filename  = $file->hashName();
-            $extension = $file->extension();
-            $picture   = str_replace(' ', '_', $filename).'-'.rand().'_'.time().'.'.$extension;
-            $path      = $file->storeAs('public/jugadores', $picture);
-            $data['link_img_jug'] = $picture; 
+        $codEquipoDelJugadorIngresado = $request->cod_equi;
+        $torneo = Equipo::firstWhere('cod_equi', $codEquipoDelJugadorIngresado);
+        $codTorneoDelEquipoIngresado = $torneo['cod_torn'];
+
+        $numIdenJugadorIngresado = $request->num_iden_jug;
+        $nacionJugadorIngresado = $request->nacion_jug;
+
+        $listaEquipos = Torneo::find($codTorneoDelEquipoIngresado)->equipos()->get();
+        $existe = false;
+        foreach ($listaEquipos as $equipo) {
+            $listaJugadores = $equipo->jugadores()->get();
+            /*$existe = $listaJugadores->contains(['num_iden_jug' => $numIdenJugadorIngresado,
+                                                 'nacion_jug' => $nacionJugadorIngresado]);*/
+            foreach ($listaJugadores as $jugador) {
+                if ($jugador->num_iden_jug == $numIdenJugadorIngresado &&
+                    $jugador->nacion_jug == $nacionJugadorIngresado && !$existe) {
+                    $existe = true;
+                }
+            }
         }
-        Jugador::create($data);
+        if (!$existe) {
+            $data      = $request->all();
+            if ($request->hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()) {
+                $file      = $request->file('link_img_jug');
+                $filename  = $file->hashName();
+                $extension = $file->extension();
+                $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
+                $path      = $file->storeAs('public/jugadores', $picture);
+                $data['link_img_jug'] = $picture;
+            }
+            Jugador::create($data);
+            $confirmacion = true;
+            $mensaje = 'Jugador guardado correctamente';
+            $solicitud = 201;
+        } else {
+            $confirmacion = false;
+            $mensaje = 'Este jugador ya fue registrado anteriormente';
+            $solicitud = 401;
+        }
         return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Jugador guardado correctamente'
-        ],201);
+            'confirmacion' => $confirmacion,
+            'mensaje' => $mensaje
+        ], $solicitud);
     }
 
     /**
@@ -55,7 +86,7 @@ class JugadorController extends Controller
         return response()->json([
             'confirmacion' => true,
             'jugador' => $jugador
-        ],200);
+        ], 200);
     }
 
     /**
@@ -71,7 +102,7 @@ class JugadorController extends Controller
         return response()->json([
             'confirmacion' => true,
             'mensaje' => 'Datos del jugador actualizados correctamente'
-        ],201);
+        ], 201);
     }
 
     /**
@@ -86,6 +117,6 @@ class JugadorController extends Controller
         return response()->json([
             'confirmacion' => true,
             'mensaje' => 'Jugador eliminado'
-        ],200);
+        ], 200);
     }
 }

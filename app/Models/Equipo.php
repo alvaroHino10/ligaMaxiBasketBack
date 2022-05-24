@@ -20,7 +20,11 @@ class Equipo extends Model
         'color_equi'
     ];
 
-    public function torneos(){
+    public function torneo(){
         return $this->belongsTo(Torneo::class,'cod_torn');
+    }
+
+    public function jugadores(){
+        return $this->hasMany(Jugador::class,'cod_equi');
     }
 }

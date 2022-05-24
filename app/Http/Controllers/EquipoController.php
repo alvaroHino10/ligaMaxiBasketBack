@@ -47,7 +47,6 @@ class EquipoController extends Controller
                 'confirmacion' => $confirmacion,
                 'mensaje' => $mensaje
             ],$solicitud); 
-        
     }
 
     /**
