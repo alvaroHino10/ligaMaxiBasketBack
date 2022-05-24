@@ -27,7 +27,16 @@ class JugadorController extends Controller
      */
     public function store(GuardarJugadorRequest $request)
     {
-        Jugador::create($request->all());
+        $data      = $request->all();
+        if ($request-> hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()){ 
+            $file      = $request->file('link_img_jug');
+            $filename  = $file->hashName();
+            $extension = $file->extension();
+            $picture   = str_replace(' ', '_', $filename).'-'.rand().'_'.time().'.'.$extension;
+            $path      = $file->storeAs('public/jugadores', $picture);
+            $data['link_img_jug'] = $picture; 
+        }
+        Jugador::create($data);
         return response()->json([
             'confirmacion' => true,
             'mensaje' => 'Jugador guardado correctamente'
@@ -45,7 +54,7 @@ class JugadorController extends Controller
         $jugador = Jugador::find($id);
         return response()->json([
             'confirmacion' => true,
-            'cuerpotecnico' => $jugador
+            'jugador' => $jugador
         ],200);
     }
 

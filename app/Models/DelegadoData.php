@@ -12,7 +12,6 @@ class DelegadoData extends Model
     protected $table = 'delegado_data';
     protected $primaryKey = 'cod_deleg_data';
     protected $fillable = [
-        'cod_deleg_data',
         'num_iden_deleg_data',
         'fecha_nac_deleg_data', 
         'sexo_deleg_data',

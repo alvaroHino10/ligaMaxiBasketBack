@@ -24,7 +24,6 @@ class GuardarPreInscripcionRequest extends FormRequest
     public function rules()
     {
         return [
-            'cod_preinscrip' => 'required',
             'num_transfer_preinscrip' => 'required',
             'costo_preinscrip' => 'required',
             'fecha_preinscrip' => 'required',
