@@ -52,6 +52,8 @@ class JugadorController extends Controller
     public function show($id)
     {
         $jugador = Jugador::find($id);
+        $nombre_archivo = $jugador['link_img_jug'];
+        $jugador['link_img_jug'] = asset(Storage::url('public/jugadores/'.$nombre_archivo));
         return response()->json([
             'confirmacion' => true,
             'jugador' => $jugador
