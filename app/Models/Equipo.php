@@ -19,4 +19,8 @@ class Equipo extends Model
         'discip_equi',
         'color_equi'
     ];
+
+    public function torneos(){
+        return $this->belongsTo(Torneo::class,'cod_torn');
+    }
 }
