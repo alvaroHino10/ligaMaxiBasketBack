@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GuardarEquipoRequest;
 use App\Models\Equipo;
+use App\Models\Torneo;
 use Illuminate\Http\Request;
 
 class EquipoController extends Controller
@@ -28,11 +29,24 @@ class EquipoController extends Controller
      */
     public function store(GuardarEquipoRequest $request)
     {
-        Equipo::create($request->all());
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Equipo guardado correctamente'
-        ],201);
+        $codTorneoEquipoIngresado = $request->cod_torn;
+        $nombreEquipoIngresado = $request->nombre_equi;
+        $equipo_existente = Torneo::find($codTorneoEquipoIngresado)->equipos()
+                        ->where('nombre_equi',$nombreEquipoIngresado)->first();
+        if($equipo_existente == null){
+            Equipo::create($request->all());
+            $confirmacion = true;
+            $mensaje = 'Equipo guardado correctamente';
+            $solicitud = 201;
+        }else{
+            $confirmacion = false;
+            $mensaje = 'Este nombre de equipo ya fue registrado anteriormente';
+            $solicitud = 401;
+        }
+            return response()->json([
+                'confirmacion' => $confirmacion,
+                'mensaje' => $mensaje
+            ],$solicitud); 
     }
 
     /**

@@ -27,4 +27,8 @@ class Jugador extends Model
         'num_equi_jug',
         'link_img_jug'
     ];
+
+    public function equipo(){
+        return $this->belongsTo(Equipo::class,'cod_equi');
+    }
 }
