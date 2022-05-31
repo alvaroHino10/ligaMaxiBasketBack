@@ -7,6 +7,7 @@ use App\Models\Equipo;
 use App\Models\Jugador;
 use App\Models\Torneo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class JugadorController extends Controller
 {
