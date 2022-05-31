@@ -62,7 +62,7 @@ class JugadorController extends Controller
             }
             Jugador::create($data);
             $confirmacion = true;
-            $mensaje = 'Jugador guardado correctamente';
+            $mensaje = 'Jugador registrado correctamente';
             $solicitud = 201;
         } else {
             $confirmacion = false;

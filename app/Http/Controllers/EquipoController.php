@@ -36,11 +36,11 @@ class EquipoController extends Controller
         if($equipo_existente == null){
             Equipo::create($request->all());
             $confirmacion = true;
-            $mensaje = 'Equipo guardado correctamente';
+            $mensaje = 'Equipo registrado correctamente';
             $solicitud = 201;
         }else{
             $confirmacion = false;
-            $mensaje = 'Este nombre de equipo ya fue registrado anteriormente';
+            $mensaje = 'Este equipo ya fue registrado anteriormente';
             $solicitud = 401;
         }
             return response()->json([
