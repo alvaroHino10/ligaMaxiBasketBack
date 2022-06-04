@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GuardarJugadorRequest;
+use App\Http\Resources\JugadorResource;
 use App\Models\Equipo;
 use App\Models\Jugador;
 use App\Models\Torneo;
@@ -19,7 +20,8 @@ class JugadorController extends Controller
     public function index()
     {
         $jugador = Jugador::all();
-        return response($jugador, 200);
+        //return response($jugador, 200);
+        return JugadorResource::collection($jugador);
     }
 
     /**
@@ -60,7 +62,8 @@ class JugadorController extends Controller
                 $path      = $file->storeAs('public/jugadores', $picture);
                 $data['link_img_jug'] = $picture;
             }
-            Jugador::create($data);
+            //Jugador::create($data);
+            $resgistrado = Jugador::create($data);
             $confirmacion = true;
             $mensaje = 'Jugador registrado correctamente';
             $solicitud = 201;
@@ -69,10 +72,15 @@ class JugadorController extends Controller
             $mensaje = 'Este jugador ya fue registrado anteriormente';
             $solicitud = 401;
         }
-        return response()->json([
-            'confirmacion' => $confirmacion,
-            'mensaje' => $mensaje
-        ], $solicitud);
+        //return response()->json([
+        //    'confirmacion' => $confirmacion,
+        //    'mensaje' => $mensaje
+        //], $solicitud);
+        return (new JugadorResource($resgistrado))
+            ->additional(['confirmacion' => $confirmacion,
+                        'mensaje' => $mensaje])
+            ->response()
+            ->setStatusCode($solicitud);
     }
 
     /**
@@ -81,15 +89,17 @@ class JugadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Jugador $jugador)
     {
-        $jugador = Jugador::find($id);
+        //$jugador = Jugador::find($id);
         $nombre_archivo = $jugador['link_img_jug'];
         $jugador['link_img_jug'] = asset(Storage::url('public/jugadores/'.$nombre_archivo));
-        return response()->json([
-            'confirmacion' => true,
-            'jugador' => $jugador
-        ], 200);
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'jugador' => $jugador
+        //], 200);
+        return (new JugadorResource($jugador))
+            ->additional(['confirmacion' => true]);
     }
 
     /**
@@ -99,13 +109,17 @@ class JugadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Jugador $jugador)
     {
-        $jugador = Jugador::find($id)->update($request->all());
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Datos del jugador actualizados correctamente'
-        ], 201);
+        //$jugador = Jugador::find($id)->update($request->all());
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'mensaje' => 'Datos del jugador actualizados correctamente'
+        //], 201);
+        $jugador->update($request->all());
+        return (new JugadorResource($jugador))
+            ->additional(['confirmacion' => true, 
+                        'mensaje' => 'Datos del jugador actualizados correctamente']);
     }
 
     /**
@@ -114,12 +128,16 @@ class JugadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Jugador $jugador)
     {
-        $jugador = Jugador::find($id)->delete();
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Jugador eliminado'
-        ], 200);
+        //$jugador = Jugador::find($id)->delete();
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'mensaje' => 'Jugador eliminado'
+        //], 200);
+        $jugador->delete();
+        return (new JugadorResource([$jugador]))
+            ->additional(['confirmacion' => true, 
+                        'mensaje' => 'Jugador eliminado']);
     }
 }

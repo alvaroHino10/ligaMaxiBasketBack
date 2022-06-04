@@ -26,8 +26,4 @@ class EquipoResource extends JsonResource
             'color_equi' => $this->color_equi
         ];
     }
-
-    public function with($request){
-        return ['confirmacion' => true];
-    }
 }

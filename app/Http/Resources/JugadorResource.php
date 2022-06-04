@@ -34,7 +34,4 @@ class JugadorResource extends JsonResource
         ];
     }
 
-    public function with($request){
-        return ['confirmacion' => true];
-    }
 }
