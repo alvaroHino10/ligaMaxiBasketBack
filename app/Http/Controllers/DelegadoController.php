@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GuardarDelegadoRequest;
+use App\Http\Resources\DelegadoResource;
+use App\Http\Resources\PreInscripcionResource;
 use App\Models\Delegado;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,8 @@ class DelegadoController extends Controller
     public function index()
     {
         $listaDelegados = Delegado::all();
-        return response($listaDelegados);
+        //return response($listaDelegados);
+        return PreInscripcionResource::collection(($listaDelegados)); 
     }
 
     /**
@@ -27,11 +30,12 @@ class DelegadoController extends Controller
      */
     public function store(GuardarDelegadoRequest $request)
     {
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'mensaje' => 'Delegado guardado correctamente'
+        //],201);
         Delegado::create($request->all());
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Delegado guardado correctamente'
-        ],201);
+        return (new DelegadoResource(Delegado::create($request->all()))) ->additional(['mensaje' => 'Delegado guardado correctamente']);
     }
 
     /**
@@ -40,13 +44,14 @@ class DelegadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Delegado $delegado)
     {
-        $delegado = Delegado::find($id);
-        return response()->json([
-            'confirmacion' => true,
-            'delegado' => $delegado
-        ],200);
+        //$delegado = Delegado::find($id);
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'delegado' => $delegado
+        //],200);
+        return new DelegadoResource($delegado);
     }
 
     /**
@@ -56,13 +61,16 @@ class DelegadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GuardarDelegadoRequest $request, $id)
+    public function update(GuardarDelegadoRequest $request, Delegado $delegado)
     {
-        $delegado = Delegado::find($id)->update($request->all());
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Datos del delegado actualizados correctamente'
-        ],201);
+        //$delegado = Delegado::find($id)->update($request->all());
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'mensaje' => 'Datos del delegado actualizados correctamente'
+        //],201);
+        $delegado->update($request->all());
+        return (new DelegadoResource($delegado))->
+            additional(['mensaje' => 'Datos del delegado actualizados correctamente']);
     }
 
     /**
@@ -71,12 +79,15 @@ class DelegadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Delegado $delegado)
     {
-        $delegado = Delegado::find($id)->delete();
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Delegado eliminado'
-        ],200);
+        //$delegado = Delegado::find($id)->delete();
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'mensaje' => 'Delegado eliminado'
+        //],200);
+        $delegado->delete();
+        return (new DelegadoResource($delegado))->
+            additional(['mensaje' => 'Delegado eliminado']);
     }
 }

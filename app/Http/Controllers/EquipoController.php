@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\GuardarEquipoRequest;
+use App\Http\Resources\EquipoResource;
 use App\Models\Equipo;
 use App\Models\Torneo;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class EquipoController extends Controller
     public function index()
     {
         $listaEquipos = Equipo::all();
-        return response($listaEquipos);
+        return EquipoResource::collection($listaEquipos);
     }
 
     /**
@@ -34,19 +35,25 @@ class EquipoController extends Controller
         $equipo_existente = Torneo::find($codTorneoEquipoIngresado)->equipos()
                         ->where('nombre_equi',$nombreEquipoIngresado)->first();
         if($equipo_existente == null){
-            Equipo::create($request->all());
+            $equipo = Equipo::create($request->all());
+            //Equipo::create($request->all());
             $confirmacion = true;
-            $mensaje = 'Equipo guardado correctamente';
+            $mensaje = 'Equipo registrado correctamente';
             $solicitud = 201;
         }else{
             $confirmacion = false;
-            $mensaje = 'Este nombre de equipo ya fue registrado anteriormente';
+            $mensaje = 'Este equipo ya fue registrado anteriormente';
             $solicitud = 401;
         }
-            return response()->json([
-                'confirmacion' => $confirmacion,
-                'mensaje' => $mensaje
-            ],$solicitud); 
+            //return response()->json([
+            //    'confirmacion' => $confirmacion,
+            //    'mensaje' => $mensaje
+            //],$solicitud); 
+        return (new EquipoResource($equipo))
+            ->additional(['confirmacion' => $confirmacion,
+                        'mensaje' => $mensaje])
+            ->response()
+            ->setStatusCode($solicitud);
     }
 
     /**
@@ -55,13 +62,15 @@ class EquipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Equipo $equipo)
     {
-        $equipo = Equipo::find($id);
-        return response()->json([
-            'confirmacion' => true,
-            'cuerpotecnico' => $equipo
-        ],200);
+        //$equipo = Equipo::find($id);
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'cuerpotecnico' => $equipo
+        //],200);
+        return (new EquipoResource($equipo))
+            ->additional(['confirmacion' => true]);
     }
 
     /**
@@ -71,13 +80,17 @@ class EquipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GuardarEquipoRequest $request, $id)
+    public function update(GuardarEquipoRequest $request, Equipo $equipo)
     {
-        $equipo = Equipo::find($id)->update($request->all());
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Datos del equipo actualizados correctamente'
-        ],201);
+        //$equipo = Equipo::find($id)->update($request->all());
+        //return response()->json([
+        //    'confirmacion' => true,
+        //    'mensaje' => 'Datos del equipo actualizados correctamente'
+        //],201);
+        $equipo->update($request->all());
+        return (new EquipoResource($equipo))->
+            additional(['confirmacion' => true,
+                        'mensaje' => 'Datos del equipo actualizados correctamente']);
     }
 
     /**
@@ -86,12 +99,16 @@ class EquipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Equipo $equipo)
     {
-        $equipo = Equipo::find($id)->delete();
-        return response()->json([
-            'confirmacion' => true,
-            'mensaje' => 'Equipo eliminado'
-        ],200);
+        //$equipo = Equipo::find($id)->delete();
+        //return response()->json([
+        //    'confirmacion' => true,
+        //   'mensaje' => 'Equipo eliminado'
+        //],200);
+        $equipo->delete();
+        return (new EquipoResource($equipo))->
+            additional(['confirmacion' => true,
+                        'mensaje' => 'Equipo eliminado']);
     }
 }
