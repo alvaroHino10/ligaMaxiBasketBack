@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ControlPartidoController;
 use App\Http\Controllers\DelegadoController;
 use App\Http\Controllers\PreInscripcionController;
 use App\Http\Controllers\EquipoController;
@@ -26,3 +27,4 @@ Route::apiResource('delegado',DelegadoController::class);
 Route::apiResource('preinscripcion', PreInscripcionController::class);
 Route::apiResource('equipo', EquipoController::class);
 Route::apiResource('jugador', JugadorController::class);
+Route::apiResource('control-partido', ControlPartidoController::class);
