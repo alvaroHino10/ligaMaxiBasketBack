@@ -15,6 +15,7 @@ class CreatePreinscripcionTable extends Migration
     {
         Schema::create('preinscripcion', function (Blueprint $table) {
             $table->id('cod_preinscrip');
+            $table->foreignId('cod_deleg')->references('cod_deleg')->on('delegado');
             $table->string('num_transfer_preinscrip',20);
             $table->integer('costo_preinscrip');
             $table->date('fecha_preinscrip');
@@ -33,3 +34,4 @@ class CreatePreinscripcionTable extends Migration
         Schema::dropIfExists('preinscripcion');
     }
 }
+

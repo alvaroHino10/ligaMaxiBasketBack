@@ -15,7 +15,6 @@ class CreateControlPartidoTable extends Migration
     {
         Schema::create('control_partido', function (Blueprint $table) {
             $table->id('cod_contr_part');
-            $table->foreignId('cod_part')->references('cod_part')->on('partido');
             $table->string('nombre_contr_part',80);
             $table->string('prim_ap_contr_part',80);
             $table->string('seg_ap_contr_part',80);
