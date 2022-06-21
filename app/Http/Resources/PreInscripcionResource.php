@@ -16,6 +16,7 @@ class PreInscripcionResource extends JsonResource
     {   
         return [
             'cod_preinscrip' => $this->cod_preinscrip,
+            'cod_deleg' => $this->cod_deleg,
             'num_transfer_preinscrip' => $this->num_transfer_preinscrip,
             'costo_preinscrip' => $this->costo_preinscrip,
             'fecha_preinscrip' => $this->fecha_preinscrip,

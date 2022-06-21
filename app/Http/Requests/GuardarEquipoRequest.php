@@ -24,12 +24,13 @@ class GuardarEquipoRequest extends FormRequest
     public function rules()
     {
         return [
+            'cod_torn' => 'required',
             'cod_preinscrip' => 'required',
             'nombre_equi' => 'required',
             'categ_equi' => 'required',
-            'pais_equi' => 'required',
-            'discip_equi' => 'required',
-            'color_equi' => 'required'
+            //'pais_equi' => 'required',
+            //'discip_equi' => 'required',
+            //'color_equi' => 'required'
         ];
     }
 }

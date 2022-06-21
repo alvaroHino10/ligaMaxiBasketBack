@@ -19,7 +19,7 @@ class DelegadoController extends Controller
     {
         $listaDelegados = Delegado::all();
         //return response($listaDelegados);
-        return PreInscripcionResource::collection(($listaDelegados)); 
+        return DelegadoResource::collection(($listaDelegados)); 
     }
 
     /**
