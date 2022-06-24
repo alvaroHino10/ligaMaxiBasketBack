@@ -28,9 +28,6 @@ class GuardarEquipoRequest extends FormRequest
             'cod_preinscrip' => 'required',
             'nombre_equi' => 'required',
             'categ_equi' => 'required',
-            //'pais_equi' => 'required',
-            //'discip_equi' => 'required',
-            //'color_equi' => 'required'
         ];
     }
 }

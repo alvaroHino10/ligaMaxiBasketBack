@@ -109,7 +109,7 @@ class JugadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jugador $jugador)
+    public function update(GuardarJugadorRequest $request, Jugador $jugador)
     {
         //$jugador = Jugador::find($id)->update($request->all());
         //return response()->json([
@@ -136,7 +136,7 @@ class JugadorController extends Controller
         //    'mensaje' => 'Jugador eliminado'
         //], 200);
         $jugador->delete();
-        return (new JugadorResource([$jugador]))
+        return (new JugadorResource($jugador))
             ->additional(['confirmacion' => true, 
                         'mensaje' => 'Jugador eliminado']);
     }
