@@ -68,7 +68,7 @@ class EquipoController extends Controller
         //return response()->json([
         //    'confirmacion' => true,
         //    'cuerpotecnico' => $equipo
-        //],200);
+        //],200); 
         return (new EquipoResource($equipo))
             ->additional(['confirmacion' => true]);
     }
@@ -105,7 +105,7 @@ class EquipoController extends Controller
         //return response()->json([
         //    'confirmacion' => true,
         //   'mensaje' => 'Equipo eliminado'
-        //],200);
+        //],200); 
         $equipo->delete();
         return (new EquipoResource($equipo))->
             additional(['confirmacion' => true,

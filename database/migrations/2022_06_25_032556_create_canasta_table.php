@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePuntajeTable extends Migration
+class CreateCanastaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreatePuntajeTable extends Migration
      */
     public function up()
     {
-        Schema::create('puntaje', function (Blueprint $table) {
+        Schema::create('canasta', function (Blueprint $table) {
             $table->id('cod_punt');
             $table->foreignId('cod_jug')->references('cod_jug')->on('jugador');
-            $table->string('periodo',20);
             $table->integer('cant_cnsta_simple');
             $table->integer('cant_cnsta_doble');
             $table->integer('cant_cnsta_triple');
@@ -31,6 +30,6 @@ class CreatePuntajeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('puntaje');
+        Schema::dropIfExists('canasta');
     }
 }

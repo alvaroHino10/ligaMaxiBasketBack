@@ -5,6 +5,7 @@ use App\Http\Controllers\DelegadoController;
 use App\Http\Controllers\PreInscripcionController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\JugadorController;
+use App\Http\Controllers\PartidoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,4 @@ Route::apiResource('preinscripcion', PreInscripcionController::class);
 Route::apiResource('equipo', EquipoController::class);
 Route::apiResource('jugador', JugadorController::class);
 Route::apiResource('control-partido', ControlPartidoController::class);
+Route::apiResource('partido',PartidoController::class);

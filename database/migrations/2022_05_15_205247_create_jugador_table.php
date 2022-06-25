@@ -28,6 +28,7 @@ class CreateJugadorTable extends Migration
             $table->string('sexo_jug',1);
             $table->string('dom_jug',200);//domicilio
             $table->integer('num_equi_jug');
+            $table->date('fecha_preinscrip_jug');
             $table->string('link_img_jug',300);
             $table->timestamps();
         });

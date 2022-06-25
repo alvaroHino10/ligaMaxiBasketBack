@@ -25,4 +25,8 @@ class Torneo extends Model
     public function equipos(){
         return $this->hasMany(Equipo::class, 'cod_torn');
     }
+    
+    public function partidos(){
+        return $this->hasMany(Partido::class, 'cod_torn');
+    }
 }
