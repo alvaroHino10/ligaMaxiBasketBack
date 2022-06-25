@@ -52,14 +52,14 @@ class PreInscripcionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PreInscripcion $preInscripcion)
+    public function show(PreInscripcion $preinscripcion)
     {
         //$preInscripcion = PreInscripcion::find($id);
         //return response()->json([
         //    'confirmacion' => true,
         //    'pre inscripcion' => $preInscripcion
         //], 200);
-        return new PreInscripcionResource($preInscripcion);
+        return new PreInscripcionResource($preinscripcion);
     }
 
     /**
@@ -69,15 +69,16 @@ class PreInscripcionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GuardarPreInscripcionRequest $request, PreInscripcion $preInscripcion)
+    public function update(GuardarPreInscripcionRequest $request, PreInscripcion $preinscripcion)
     {
-        $preInscripcion->update($request->all());
+        //dd($preinscripcion->cod_preinscrip);
+        $preinscripcion->update($request->all());
         //$preInscripcion = PreInscripcion::find($id)->update($request->all());
         //return response()->json([
         //    'confirmacion' => true,
         //    'mensaje' => 'Datos de la preinscripcion actualizados correctamente'
         //], 201);
-        return (new PreInscripcionResource($preInscripcion)) -> 
+        return (new PreInscripcionResource($preinscripcion)) -> 
             additional(['mensaje' => 'Datos de la preinscripcion actualizados correctamente']);
     }
 
@@ -87,15 +88,15 @@ class PreInscripcionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PreInscripcion $preInscripcion)
+    public function destroy(PreInscripcion $preinscripcion)
     {
         //$preInscripcion = PreInscripcion::find($id)->delete();
         //return response()->json([
         //    'confirmacion' => true,
         //    'mensaje' => 'Preinscripcion eliminada'
         //], 200);
-        $preInscripcion->delete();
-        return (new PreInscripcionResource($preInscripcion))->
+        $preinscripcion->delete();
+        return (new PreInscripcionResource($preinscripcion))->
             additional(['mensaje' => 'Preinscripcion eliminada']);
     }
 }

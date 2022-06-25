@@ -28,6 +28,7 @@ class GuardarControlPartidoRequest extends FormRequest
             'prim_ap_contr_part' => 'required',
             'seg_ap_contr_part' => 'required',
             'num_iden_contr_part' => 'required',
+            'telf_contr_part' => 'required',
             'fecha_nac_contr_part' => 'required',
             'link_img_contr_part' => 'required',
             'rol_contr_part' => 'required',

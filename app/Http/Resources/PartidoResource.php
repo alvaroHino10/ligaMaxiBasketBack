@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EquipoResource extends JsonResource
+class PartidoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,12 @@ class EquipoResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
-            'cod_equi' => $this->cod_equi,
+            'cod_part' => $this->cod_part,
             'cod_torn' => $this->cod_torn,
-            'cod_preinscrip' => $this->cod_preinscrip,
-            'nombre_equi' => $this->nombre_equi,
-            'categ_equi' => $this->categ_equi,
+            'fecha_part'=> $this->fecha_part,
+            'hora_ini_part'=> $this->hora_ini_part,
+            'hora_fin_part'=> $this->hora_fin_part
         ];
     }
 }

@@ -19,7 +19,7 @@ class DelegadoController extends Controller
     {
         $listaDelegados = Delegado::all();
         //return response($listaDelegados);
-        return PreInscripcionResource::collection(($listaDelegados)); 
+        return DelegadoResource::collection(($listaDelegados)); 
     }
 
     /**
@@ -34,7 +34,6 @@ class DelegadoController extends Controller
         //    'confirmacion' => true,
         //    'mensaje' => 'Delegado guardado correctamente'
         //],201);
-        Delegado::create($request->all());
         return (new DelegadoResource(Delegado::create($request->all()))) ->additional(['mensaje' => 'Delegado guardado correctamente']);
     }
 

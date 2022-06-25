@@ -14,7 +14,11 @@ class Delegado extends Model
         'cod_preinscrip',
         'nombre_deleg',
         'ap_deleg',
+        'num_iden_deleg',
         'correo_deleg',
         'telf_deleg',
+        'fecha_nac_deleg',
+        'sexo_deleg',
+        'link_img_deleg'
     ];
 }

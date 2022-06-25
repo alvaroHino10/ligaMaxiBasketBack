@@ -15,7 +15,6 @@ class CreatePartidoTable extends Migration
     {
         Schema::create('partido', function (Blueprint $table) {
             $table->id('cod_part');
-            $table->foreignId('cod_torn')->references('cod_torn')->on('torneo');
             $table->date('fecha_part');
             $table->time('hora_ini_part');
             $table->time('hora_fin_part');

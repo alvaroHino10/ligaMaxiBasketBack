@@ -24,11 +24,14 @@ class GuardarDelegadoRequest extends FormRequest
     public function rules()
     {
         return [
-            'cod_preinscrip' => 'required',
             'nombre_deleg' => 'required',
             'ap_deleg' => 'required',
+            'num_iden_deleg' => 'required',
             'correo_deleg' => 'required',
             'telf_deleg' => 'required',
+            'fecha_nac_deleg' => 'required',
+            'sexo_deleg' => 'required',
+            'link_img_deleg' => 'required'
         ];
     }
 }

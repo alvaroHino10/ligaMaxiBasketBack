@@ -26,7 +26,7 @@ class ControlPartidoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GuardarControlPartidoRequest $request)
+    public function store(GuardarControlPartidoRequest $request) 
     {
         $controlPartido = ControlPartido::create($request->all());
         return (new ControlPartidoResource($controlPartido))->additional(['mensaje' => $request->rol_contr_part.' guardado correctamente']);

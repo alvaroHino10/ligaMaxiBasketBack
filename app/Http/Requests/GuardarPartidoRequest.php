@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GuardarPreInscripcionRequest extends FormRequest
+class GuardarPartidoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class GuardarPreInscripcionRequest extends FormRequest
     public function rules()
     {
         return [
-            'cod_deleg' => 'required',
-            'num_transfer_preinscrip' => 'required',
-            'costo_preinscrip' => 'required',
-            'fecha_preinscrip' => 'required',
-            'link_img_comprob' => 'required',
+            'cod_torn' => 'required',
+            'fecha_part'=> 'required',
+            'hora_ini_part'=> 'required',
+            'hora_fin_part'=> 'required'
+            
         ];
     }
 }
