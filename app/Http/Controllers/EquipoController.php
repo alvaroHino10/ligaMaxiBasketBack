@@ -31,29 +31,22 @@ class EquipoController extends Controller
     public function store(GuardarEquipoRequest $request)
     {
         $codTorneoEquipoIngresado = $request->cod_torn;
+        $torneo = Torneo::find($codTorneoEquipoIngresado);
+        $listaEquiposTorneo = $torneo->equipos;
         $nombreEquipoIngresado = $request->nombre_equi;
-        $equipo_existente = Torneo::find($codTorneoEquipoIngresado)->equipos()
-                        ->where('nombre_equi',$nombreEquipoIngresado)->first();
-        if($equipo_existente == null){
+        $equipoExistente = $listaEquiposTorneo->where('nombre_equi', $nombreEquipoIngresado);
+        if($equipoExistente->isEmpty()){
             $equipo = Equipo::create($request->all());
-            //Equipo::create($request->all());
-            $confirmacion = true;
-            $mensaje = 'Equipo registrado correctamente';
-            $solicitud = 201;
+            return (new EquipoResource($equipo))
+                    ->additional(['confirmacion' => true,
+                                  'mensaje' => 'Equipo registrado correctamente'])
+                    ->response()
+                    ->setStatusCode(201); 
         }else{
-            $confirmacion = false;
-            $mensaje = 'Este equipo ya fue registrado anteriormente';
-            $solicitud = 401;
-        }
-            //return response()->json([
-            //    'confirmacion' => $confirmacion,
-            //    'mensaje' => $mensaje
-            //],$solicitud); 
-        return (new EquipoResource($equipo))
-            ->additional(['confirmacion' => $confirmacion,
-                        'mensaje' => $mensaje])
-            ->response()
-            ->setStatusCode($solicitud);
+            return response()->json(['confirmacion' => false,
+                                     'mensaje' => 'Este equipo ya fue registrado anteriormente'])
+                   ->setStatusCode(401);
+        }    
     }
 
     /**
