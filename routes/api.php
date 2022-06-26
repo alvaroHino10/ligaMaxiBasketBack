@@ -26,11 +26,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource('equipo', EquipoController::class);
     Route::apiResource('jugador', JugadorController::class);
     Route::apiResource('partido',PartidoController::class);
-    Route::delete('logout', [AuthController::class, 'logout']); 
+    Route::apiResource('control-partido', ControlPartidoController::class);
+    Route::delete('logout', [AuthController::class, 'logout']);
 });
 
 Route::post('signup', [AuthController::class, 'signup']); 
 Route::post('signin', [AuthController::class, 'signin']); 
 Route::apiResource('delegado',DelegadoController::class);
-Route::apiResource('control-partido', ControlPartidoController::class);
+
 
