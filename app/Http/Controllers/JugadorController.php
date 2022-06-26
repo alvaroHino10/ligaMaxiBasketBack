@@ -32,26 +32,25 @@ class JugadorController extends Controller
      */
     public function store(GuardarJugadorRequest $request)
     {
+        $existe = false;
         $codEquipoDelJugadorIngresado = $request->cod_equi;
-        $torneo = Equipo::firstWhere('cod_equi', $codEquipoDelJugadorIngresado);
-        $codTorneoDelEquipoIngresado = $torneo['cod_torn'];
+        $equipoJugador = Equipo::find($codEquipoDelJugadorIngresado);
+
+        $torneo = $equipoJugador->torneo;
+        $listaEquipos = Torneo::find($torneo->cod_torn)->equipos;
 
         $numIdenJugadorIngresado = $request->num_iden_jug;
         $nacionJugadorIngresado = $request->nacion_jug;
-
-        $listaEquipos = Torneo::find($codTorneoDelEquipoIngresado)->equipos()->get();
-        $existe = false;
-        foreach ($listaEquipos as $equipo) {
-            $listaJugadores = $equipo->jugadores()->get();
-            /*$existe = $listaJugadores->contains(['num_iden_jug' => $numIdenJugadorIngresado,
-                                                 'nacion_jug' => $nacionJugadorIngresado]);*/
-            foreach ($listaJugadores as $jugador) {
-                if ($jugador->num_iden_jug == $numIdenJugadorIngresado &&
-                    $jugador->nacion_jug == $nacionJugadorIngresado && !$existe) {
-                    $existe = true;
-                }
+        foreach($listaEquipos as $equipo){
+            $listaJugadores = $equipo->jugadores;
+            $jugadorExistente = $listaJugadores->where('num_iden_jug', $numIdenJugadorIngresado)
+                                      ->where('nacion_jug', $nacionJugadorIngresado);
+            if(!$jugadorExistente->isEmpty()){  
+                $existe = true;
+                break;
             }
-        }
+        } 
+
         if (!$existe) {
             $data      = $request->all();
             if ($request->hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()) {
@@ -62,25 +61,17 @@ class JugadorController extends Controller
                 $path      = $file->storeAs('public/jugadores', $picture);
                 $data['link_img_jug'] = $picture;
             }
-            //Jugador::create($data);
-            $resgistrado = Jugador::create($data);
-            $confirmacion = true;
-            $mensaje = 'Jugador registrado correctamente';
-            $solicitud = 201;
+            $registrado = Jugador::create($data);
+            return (new JugadorResource($registrado))
+                    ->additional(['confirmacion' => true,
+                                  'mensaje' => 'Jugador registrado correctamente'])
+                    ->response()
+                    ->setStatusCode(201);
         } else {
-            $confirmacion = false;
-            $mensaje = 'Este jugador ya fue registrado anteriormente';
-            $solicitud = 401;
-        }
-        //return response()->json([
-        //    'confirmacion' => $confirmacion,
-        //    'mensaje' => $mensaje
-        //], $solicitud);
-        return (new JugadorResource($resgistrado))
-            ->additional(['confirmacion' => $confirmacion,
-                        'mensaje' => $mensaje])
-            ->response()
-            ->setStatusCode($solicitud);
+            return response()->json(['confirmacion' => false,
+                                     'mensaje' => 'Este jugador ya fue registrado anteriormente'])
+                   ->setStatusCode(401);
+        }      
     }
 
     /**

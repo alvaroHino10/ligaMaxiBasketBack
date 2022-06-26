@@ -31,6 +31,7 @@ class JugadorResource extends JsonResource
             'dom_jug' => $this->dom_jug,
             'num_equi_jug' => $this->num_equi_jug,
             'link_img_jug' => $this->link_img_jug,
+            'fecha_preinscrip_jug' => $this->fecha_preinscrip_jug
         ];
     }
 
