@@ -6,6 +6,7 @@ use App\Http\Controllers\PreInscripcionController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\PartidoController;
+use App\Http\Controllers\TorneoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,5 @@ Route::apiResource('equipo', EquipoController::class);
 Route::apiResource('jugador', JugadorController::class);
 Route::apiResource('control-partido', ControlPartidoController::class);
 Route::apiResource('partido',PartidoController::class);
+Route::get('torneo/{torneo}/equipos',[TorneoController::class,'showEquiposTorneo']);
+Route::apiResource('torneo',TorneoController::class);

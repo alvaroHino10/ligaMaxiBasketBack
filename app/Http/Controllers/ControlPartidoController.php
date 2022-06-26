@@ -44,9 +44,9 @@ class ControlPartidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ControlPartido $contPart)
+    public function show(ControlPartido $control_partido)
     {
-        return new ControlPartidoResource($contPart);
+        return new ControlPartidoResource($control_partido);
     }
 
     /**
@@ -56,11 +56,11 @@ class ControlPartidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GuardarControlPartidoRequest $request, ControlPartido $ctrlPart)
+    public function update(GuardarControlPartidoRequest $request, ControlPartido $control_partido)
     {
-        $ctrlPart->update($request->all());
-        return (new ControlpartidoResource($ctrlPart))->
-            additional(['mensaje' => 'Datos del '.$ctrlPart->rol_contr_part.' actualizados correctamente']);
+        $control_partido->update($request->all());
+        return (new ControlpartidoResource($control_partido))->
+            additional(['mensaje' => 'Datos del '.$control_partido->rol_contr_part.' actualizados correctamente']);
 
     }
 
@@ -70,10 +70,10 @@ class ControlPartidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Controlpartido $ctrlPart)
+    public function destroy(Controlpartido $control_partido)
     {
-        $ctrlPart->delete();
-        return (new ControlPartidoResource($ctrlPart))->
-            additional(['mensaje' => $ctrlPart->rol_contr_part.' eliminado']);
+        $control_partido->delete();
+        return (new ControlPartidoResource($control_partido))->
+            additional(['mensaje' => $control_partido->rol_contr_part.' eliminado']);
     }
 }
