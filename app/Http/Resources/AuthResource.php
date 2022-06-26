@@ -17,6 +17,7 @@ class AuthResource extends JsonResource
         //return parent::toArray($request);
         return [
             'id' => $this->id,
+            'cod_deleg' => $this->cod_deleg,
             'email' => $this->email
         ];
     }

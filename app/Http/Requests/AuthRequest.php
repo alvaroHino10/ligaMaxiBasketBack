@@ -24,6 +24,7 @@ class AuthRequest extends FormRequest
     public function rules()
     {
         return [
+            'cod_deleg' => 'required',
             'email' => 'required|email|string',
             'password' => 'required|confirmed|string'
         ];
