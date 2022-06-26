@@ -10,6 +10,10 @@ class Torneo extends Model
     use HasFactory;
     protected $table = 'torneo';
     protected $primaryKey = 'cod_torn';  
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $fillable = [
         'cod_torn',
         'nombre_torn',

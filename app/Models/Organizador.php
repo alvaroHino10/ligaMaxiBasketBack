@@ -10,6 +10,10 @@ class Organizador extends Model
     use HasFactory;
     protected $table = 'organizador';
     protected $primaryKey = 'cod_organiz';  
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $fillable = [
         'cod_organiz',
         'nombre_organiz',

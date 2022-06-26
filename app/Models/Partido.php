@@ -10,6 +10,10 @@ class Partido extends Model
     use HasFactory;
     protected $table = 'partido';
     protected $primaryKey = 'cod_part';
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $fillable = [
         'cod_torn',
         'fecha_part',

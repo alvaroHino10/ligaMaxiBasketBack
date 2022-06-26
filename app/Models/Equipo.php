@@ -10,6 +10,10 @@ class Equipo extends Model
     use HasFactory;
     protected $table = 'equipo';
     protected $primaryKey = 'cod_equi';  
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $fillable = [
         'cod_torn',
         'cod_preinscrip',

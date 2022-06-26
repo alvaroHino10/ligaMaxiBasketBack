@@ -16,8 +16,13 @@ class ControlPartidoController extends Controller
      */
     public function index()
     {
-        $listaControlPartido = ControlPartido::all();
-        return ControlPartidoResource::collection($listaControlPartido);
+        $listaArbitros = ControlPartido::where('rol_contr_part', 'arbitro')->get()->toArray();
+        $listaFiscales = ControlPartido::where('rol_contr_part', 'fiscal')->get()->toArray();
+        $listaMesas = ControlPartido::where('rol_contr_part', 'mesa')->get()->toArray();
+        $listaClasificadaControlPartido = ['arbitros' => $listaArbitros,
+                                           'fiscales' => $listaFiscales,
+                                           'mesas'    => $listaMesas];
+        return response()->json($listaClasificadaControlPartido);
     }
 
     /**
