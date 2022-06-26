@@ -10,6 +10,10 @@ class ControlPartido extends Model
     use HasFactory;
     protected $table = 'control_partido';
     protected $primaryKey = 'cod_contr_part';
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
     protected $fillable = [
         'nombre_contr_part',
         'prim_ap_contr_part',
