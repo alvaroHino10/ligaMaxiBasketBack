@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GuardarJugadorRequest;
 use App\Http\Resources\JugadorResource;
 use App\Models\Equipo;
+use App\Models\Estadisticas;
 use App\Models\Jugador;
 use App\Models\Torneo;
 use Illuminate\Http\Request;
@@ -62,6 +63,9 @@ class JugadorController extends Controller
                 $data['link_img_jug'] = $picture;
             }
             $registrado = Jugador::create($data);
+            Estadisticas::create([
+                'cod_jug' => $registrado->cod_jug
+            ]);
             return (new JugadorResource($registrado))
                     ->additional(['confirmacion' => true,
                                   'mensaje' => 'Jugador registrado correctamente'])
@@ -130,5 +134,25 @@ class JugadorController extends Controller
         return (new JugadorResource($jugador))
             ->additional(['confirmacion' => true, 
                         'mensaje' => 'Jugador eliminado']);
+    }
+
+    public function updateCanastaSimple(Jugador $jugador){
+        $estadisticasJugador = $jugador->estadistica;
+        $estadisticasJugador->increment('cant_cnsta_simple');
+    }
+
+    public function updateCanastaDoble(Jugador $jugador){
+        $estadisticasJugador = $jugador->estadistica;
+        $estadisticasJugador->increment('cant_cnsta_doble');
+    }
+
+    public function updateCanastaTriple(Jugador $jugador){
+        $estadisticasJugador = $jugador->estadistica;
+        $estadisticasJugador->increment('cant_cnsta_triple');
+    }
+
+    public function updateFaltas(Jugador $jugador){
+        $estadisticasJugador = $jugador->estadistica;
+        $estadisticasJugador->increment('faltas');
     }
 }

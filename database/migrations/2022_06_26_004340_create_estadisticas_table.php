@@ -19,7 +19,6 @@ class CreateEstadisticasTable extends Migration
             $table->integer('cant_cnsta_simple')->default(0);
             $table->integer('cant_cnsta_doble')->default(0);
             $table->integer('cant_cnsta_triple')->default(0);
-            $table->integer('rebotes')->default(0);
             $table->integer('faltas')->default(0);
             $table->timestamps();
         });

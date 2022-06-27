@@ -35,4 +35,8 @@ class Jugador extends Model
     public function equipo(){
         return $this->belongsTo(Equipo::class,'cod_equi');
     }
+
+    public function estadistica(){
+        return $this->hasOne(Estadisticas::class, 'cod_jug');
+    }
 }
