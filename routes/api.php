@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ControlPartidoController;
 use App\Http\Controllers\DelegadoController;
 use App\Http\Controllers\PreInscripcionController;
@@ -21,15 +22,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::apiResource('preinscripcion', PreInscripcionController::class);
+    Route::apiResource('equipo', EquipoController::class);
+    Route::apiResource('jugador', JugadorController::class);
+    Route::apiResource('partido',PartidoController::class);
+    Route::apiResource('control-partido', ControlPartidoController::class);
+    Route::get('torneo/{torneo}/equipos',[TorneoController::class,'showEquiposTorneo']);
+    Route::apiResource('torneo',TorneoController::class);
+    Route::delete('logout', [AuthController::class, 'logout']);
 });
 
+Route::post('signup', [AuthController::class, 'signup']);
+Route::post('signin', [AuthController::class, 'signin']); 
 Route::apiResource('delegado',DelegadoController::class);
-Route::apiResource('preinscripcion', PreInscripcionController::class);
-Route::apiResource('equipo', EquipoController::class);
-Route::apiResource('jugador', JugadorController::class);
-Route::apiResource('control-partido', ControlPartidoController::class);
-Route::apiResource('partido',PartidoController::class);
-Route::get('torneo/{torneo}/equipos',[TorneoController::class,'showEquiposTorneo']);
-Route::apiResource('torneo',TorneoController::class);
