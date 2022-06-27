@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GuardarJugadorRequest;
+use App\Http\Resources\EstadisticasResource;
 use App\Http\Resources\JugadorResource;
 use App\Models\Equipo;
 use App\Models\Estadisticas;
@@ -154,5 +155,10 @@ class JugadorController extends Controller
     public function updateFaltas(Jugador $jugador){
         $estadisticasJugador = $jugador->estadistica;
         $estadisticasJugador->increment('faltas');
+    }
+
+    public function getEstadisticasJugador(Jugador $jugador){
+        $estadisticasJugador = $jugador->estadistica;
+        return new EstadisticasResource($estadisticasJugador);
     }
 }

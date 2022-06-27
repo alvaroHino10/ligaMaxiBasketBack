@@ -38,4 +38,5 @@ Route::prefix('jugador/{jugador}')->group(function(){
     Route::put('/canasta_doble',[JugadorController::class,'updateCanastaDoble']);
     Route::put('/canasta_triple',[JugadorController::class,'updateCanastaTriple']);
     Route::put('/faltas',[JugadorController::class,'updateFaltas']);
+    Route::get('/estadisticas',[JugadorController::class,'getEstadisticasJugador']);
 });
