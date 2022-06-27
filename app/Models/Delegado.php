@@ -15,7 +15,6 @@ class Delegado extends Model
         'updated_at'
     ];
     protected $fillable = [
-        'cod_preinscrip',
         'nombre_deleg',
         'ap_deleg',
         'num_iden_deleg',
@@ -25,4 +24,8 @@ class Delegado extends Model
         'sexo_deleg',
         'link_img_deleg'
     ];
+
+    public function preinscripciones(){
+        return $this->hasMany(PreInscripcion::class,'cod_preinscrip');
+    }
 }
