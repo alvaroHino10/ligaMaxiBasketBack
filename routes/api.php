@@ -30,6 +30,13 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource('control-partido', ControlPartidoController::class);
     Route::get('torneo/{torneo}/equipos',[TorneoController::class,'showEquiposTorneo']);
     Route::apiResource('torneo',TorneoController::class);
+    Route::prefix('jugador/{jugador}')->group(function(){
+      Route::put('/canasta_simple',[JugadorController::class,'updateCanastaSimple']);
+      Route::put('/canasta_doble',[JugadorController::class,'updateCanastaDoble']);
+      Route::put('/canasta_triple',[JugadorController::class,'updateCanastaTriple']);
+      Route::put('/faltas',[JugadorController::class,'updateFaltas']);
+      Route::get('/estadisticas',[JugadorController::class,'getEstadisticasJugador']);
+    });
     Route::delete('logout', [AuthController::class, 'logout']);
 });
 

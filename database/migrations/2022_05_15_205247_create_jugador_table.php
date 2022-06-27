@@ -29,7 +29,7 @@ class CreateJugadorTable extends Migration
             $table->string('dom_jug',200);//domicilio
             $table->integer('num_equi_jug');
             $table->string('link_img_jug',300);
-            $table->timestamp('fecha_preinscrip_jug')->useCurrent();
+            $table->timestamp('fecha_inscrip_jug')->useCurrent();
             $table->timestamps();
         });
     }
