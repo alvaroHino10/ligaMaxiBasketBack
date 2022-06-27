@@ -7,6 +7,7 @@ use App\Http\Controllers\PreInscripcionController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\PartidoController;
+use App\Http\Controllers\TorneoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +28,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource('jugador', JugadorController::class);
     Route::apiResource('partido',PartidoController::class);
     Route::apiResource('control-partido', ControlPartidoController::class);
+    Route::get('torneo/{torneo}/equipos',[TorneoController::class,'showEquiposTorneo']);
+    Route::apiResource('torneo',TorneoController::class);
     Route::delete('logout', [AuthController::class, 'logout']);
 });
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']); 
 Route::apiResource('delegado',DelegadoController::class);
-
-

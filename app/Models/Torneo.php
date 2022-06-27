@@ -16,6 +16,7 @@ class Torneo extends Model
     ];
     protected $fillable = [
         'cod_torn',
+        'cod_organiz',
         'nombre_torn',
         'ciud_torn',
         'pais_torn',
@@ -28,9 +29,5 @@ class Torneo extends Model
 
     public function equipos(){
         return $this->hasMany(Equipo::class, 'cod_torn');
-    }
-    
-    public function partidos(){
-        return $this->hasMany(Partido::class, 'cod_torn');
     }
 }
