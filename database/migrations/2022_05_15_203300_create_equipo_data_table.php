@@ -19,6 +19,7 @@ class CreateEquipoDataTable extends Migration
             $table->string('pais_equi',50);
             $table->string('discip_equi',50);
             $table->string('color_equi',15);
+            $table->integer('cant_jug_equip')->default(0);
             $table->timestamps();
         });
 

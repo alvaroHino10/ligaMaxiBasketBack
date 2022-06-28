@@ -19,7 +19,7 @@ class CreateEquipoTable extends Migration
             $table->foreignId('cod_preinscrip')->references('cod_preinscrip')->on('preinscripcion');
             $table->string('nombre_equi',80);
             $table->string('categ_equi',5);
-            $table->integer('cant_jug_equip')->default(0);
+            $table->boolean('aprobado_equi')->default(false);
             $table->timestamps();
         });
 

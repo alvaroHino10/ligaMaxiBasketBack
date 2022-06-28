@@ -16,7 +16,7 @@ class Jugador extends Model
         'updated_at'
     ];
     protected $fillable = [
-        'cod_equi',
+        'cod_equi_data',
         'nombre_jug',
         'prim_ap_jug',
         'seg_ap_jug',
@@ -33,7 +33,7 @@ class Jugador extends Model
     ];
 
     public function equipo(){
-        return $this->belongsTo(Equipo::class,'cod_equi');
+        return $this->belongsTo(EquipoData::class,'cod_equi_data');
     }
 
     public function estadistica(){

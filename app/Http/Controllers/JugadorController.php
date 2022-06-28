@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GuardarJugadorRequest;
 use App\Http\Resources\EstadisticasResource;
 use App\Http\Resources\JugadorResource;
-use App\Models\Equipo;
+use App\Models\EquipoData;
 use App\Models\Estadisticas;
 use App\Models\Jugador;
 use App\Models\Torneo;
@@ -35,8 +35,8 @@ class JugadorController extends Controller
     public function store(GuardarJugadorRequest $request)
     {
         $existe = false;
-        $codEquipoDelJugadorIngresado = $request->cod_equi;
-        $equipoJugador = Equipo::find($codEquipoDelJugadorIngresado);
+        $codEquipoDataDelJugadorIngresado = $request->cod_equi;
+        $equipoJugador = EquipoData::find($codEquipoDataDelJugadorIngresado);
 
         $torneo = $equipoJugador->torneo;
         $listaEquipos = Torneo::find($torneo->cod_torn)->equipos;
