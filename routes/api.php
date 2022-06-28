@@ -58,6 +58,7 @@ Route::prefix('jugador/{jugador}')->group(function () {
     Route::put('/faltas', [JugadorController::class, 'updateFaltas']);
     Route::get('/estadisticas', [JugadorController::class, 'getEstadisticasJugador']);
 });
+Route::put('equipo/{equipo}/aceptado',[EquipoController::class, 'updateAceptado']);
 
 Route::prefix('delegado/{delegado}')->group(function () {
     Route::get('/preinscripciones', [DelegadoController::class, 'preinscripciones']);

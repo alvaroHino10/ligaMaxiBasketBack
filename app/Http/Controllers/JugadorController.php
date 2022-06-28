@@ -35,7 +35,7 @@ class JugadorController extends Controller
     public function store(GuardarJugadorRequest $request)
     {
         $existe = false;
-        $codEquipoDataDelJugadorIngresado = $request->cod_equi;
+        /*$codEquipoDataDelJugadorIngresado = $request->cod_equi;
         $equipoJugador = EquipoData::find($codEquipoDataDelJugadorIngresado);
 
         $torneo = $equipoJugador->torneo;
@@ -51,7 +51,7 @@ class JugadorController extends Controller
                 $existe = true;
                 break;
             }
-        } 
+        } */
 
         if (!$existe) {
             $data      = $request->all();
