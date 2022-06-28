@@ -26,6 +26,6 @@ class Delegado extends Model
     ];
 
     public function preinscripciones(){
-        return $this->hasMany(PreInscripcion::class,'cod_preinscrip');
+        return $this->hasMany(PreInscripcion::class,'cod_deleg');
     }
 }

@@ -33,8 +33,17 @@ class ControlPartidoController extends Controller
      */
     public function store(GuardarControlPartidoRequest $request) 
     {
-        $controlPartido = ControlPartido::create($request->all());
-        return (new ControlPartidoResource($controlPartido))->additional(['mensaje' => $request->rol_contr_part.' guardado correctamente']);
+        $data      = $request->all();
+        if ($request->hasFile('link_img_contr_part') && $request->file('link_img_contr_part')->isValid()) {
+            $file      = $request->file('link_img_contr_part');
+            $filename  = $file->hashName();
+            $extension = $file->extension();
+            $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
+            $path      = $file->storeAs('public/control_partido', $picture);
+            $data['link_img_contr_part'] = $picture;
+        }
+        $controlPartido = ControlPartido::create($data);
+        return (new ControlPartidoResource($controlPartido))->additional(['mensaje' => $request->rol_contr_part.' registrado correctamente']);
     
     }
 
