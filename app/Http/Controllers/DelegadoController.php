@@ -101,6 +101,6 @@ class DelegadoController extends Controller
 
     public function preinscripciones(Delegado $delegado){
         $preinscripciones = $delegado->preinscripciones;
-        return new DelegadoResource($preinscripciones);
+        return PreInscripcionResource::collection($preinscripciones);
     }
 }

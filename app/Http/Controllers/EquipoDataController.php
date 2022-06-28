@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EquipoDataRequest;
+use App\Http\Resources\EquipoDataResource;
+use App\Http\Resources\TorneoResource;
 use Illuminate\Http\Request;
+use App\Models\EquipoData;
 
 class EquipoDataController extends Controller
 {
@@ -13,7 +17,7 @@ class EquipoDataController extends Controller
      */
     public function index()
     {
-        //
+        return EquipoDataResource::collection(EquipoData::all());
     }
 
     /**
@@ -22,9 +26,11 @@ class EquipoDataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EquipoDataRequest $request)
     {
         //
+        $equipo_data = EquipoData::create($request->all());
+        return (new EquipoDataResource($equipo_data))->additional(['mensaje' => 'Datos de equipo guardado correctamente']);
     }
 
     /**
@@ -33,9 +39,10 @@ class EquipoDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(EquipoData $equipo_data)
     {
         //
+        return new TorneoResource($equipo_data);
     }
 
     /**
@@ -45,9 +52,11 @@ class EquipoDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EquipoDataRequest $request, EquipoData $equipo_data)
     {
         //
+        $equipo_data->update($request->all());
+        return (new EquipoDataResource($equipo_data))->additional(['mensaje' => 'Datos del equipo actualizados correctamente']);
     }
 
     /**
@@ -56,8 +65,10 @@ class EquipoDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EquipoData $equipo_data)
     {
         //
+        $equipo_data->delete();
+        return (new EquipoDataResource($equipo_data))->additional(['mensaje' => 'Datos de equipo eliminados']);
     }
 }
