@@ -28,4 +28,8 @@ class Equipo extends Model
     public function jugadores(){
         return $this->hasMany(Jugador::class,'cod_equi');
     }
+
+    public function partidos(){
+        return $this->belongsToMany(Partido::class,'puntaje_partido_equipo','cod_equi','cod_part');
+    }
 }

@@ -24,11 +24,9 @@ class GuardarPartidoRequest extends FormRequest
     public function rules()
     {
         return [
-            'cod_torn' => 'required',
             'fecha_part'=> 'required',
             'hora_ini_part'=> 'required',
-            'hora_fin_part'=> 'required'
-            
+            'hora_fin_part'=> 'required'         
         ];
     }
 }
