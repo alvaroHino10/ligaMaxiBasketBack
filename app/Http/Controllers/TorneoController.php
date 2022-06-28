@@ -70,7 +70,7 @@ class TorneoController extends Controller
     }
 
     public function showEquiposTorneo(Torneo $torneo){
-        $listaEquipos = $torneo->equipos;
+        $listaEquipos = $torneo->equipos->where('aprobado_equi',true);
         return EquipoResource::collection($listaEquipos);
     }
 }

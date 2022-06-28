@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GuardarEquipoRequest;
 use App\Http\Resources\EquipoResource;
 use App\Models\Equipo;
+use App\Models\EquipoData;
 use App\Models\Torneo;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        $listaEquipos = Equipo::all();
+        $listaEquipos = Equipo::all()->where('aprobado_equi',true);
         return EquipoResource::collection($listaEquipos);
     }
 
@@ -103,5 +104,9 @@ class EquipoController extends Controller
         return (new EquipoResource($equipo))->
             additional(['confirmacion' => true,
                         'mensaje' => 'Equipo eliminado']);
+    }
+
+    public function updateAceptado(Equipo $equipo){
+        $equipo->update(['aprobado_equi' => true]);
     }
 }

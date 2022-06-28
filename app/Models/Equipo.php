@@ -19,6 +19,7 @@ class Equipo extends Model
         'cod_preinscrip',
         'nombre_equi',
         'categ_equi',
+        'aprobado_equi'
     ];
 
     public function torneo()
