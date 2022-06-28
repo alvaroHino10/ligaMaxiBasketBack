@@ -21,7 +21,7 @@ class Partido extends Model
         'hora_fin_part'
     ];
 
-    public function torneo(){
-        return $this->belongsTo(Torneo::class, 'cod_torn');
+    public function equipos(){
+        return $this->belongsToMany(Equipo::class,'puntaje_partido_equipo','cod_part','cod_equi');
     }
 }
