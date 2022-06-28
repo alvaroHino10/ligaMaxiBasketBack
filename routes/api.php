@@ -5,6 +5,7 @@ use App\Http\Controllers\ControlPartidoController;
 use App\Http\Controllers\DelegadoController;
 use App\Http\Controllers\PreInscripcionController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\EquipoDataController;
 use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\TorneoController;
@@ -51,6 +52,7 @@ Route::apiResource('partido', PartidoController::class);
 Route::apiResource('control-partido', ControlPartidoController::class);
 Route::get('torneo/{torneo}/equipos', [TorneoController::class, 'showEquiposTorneo']);
 Route::apiResource('torneo', TorneoController::class);
+Route::apiResource('equipo_data',EquipoDataController::class);
 Route::prefix('jugador/{jugador}')->group(function () {
     Route::put('/canasta_simple', [JugadorController::class, 'updateCanastaSimple']);
     Route::put('/canasta_doble', [JugadorController::class, 'updateCanastaDoble']);
