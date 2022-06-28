@@ -34,7 +34,16 @@ class DelegadoController extends Controller
         //    'confirmacion' => true,
         //    'mensaje' => 'Delegado guardado correctamente'
         //],201);
-        return (new DelegadoResource(Delegado::create($request->all()))) ->additional(['mensaje' => 'Delegado guardado correctamente']);
+        $data      = $request->all();
+        if ($request->hasFile('link_img_deleg') && $request->file('link_img_deleg')->isValid()) {
+            $file      = $request->file('link_img_deleg');
+            $filename  = $file->hashName();
+            $extension = $file->extension();
+            $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
+            $path      = $file->storeAs('public/delegados', $picture);
+            $data['link_img_deleg'] = $picture;
+        }
+        return (new DelegadoResource(Delegado::create($data))) ->additional(['mensaje' => 'Delegado guardado correctamente']);
     }
 
     /**
@@ -88,5 +97,10 @@ class DelegadoController extends Controller
         $delegado->delete();
         return (new DelegadoResource($delegado))->
             additional(['mensaje' => 'Delegado eliminado']);
+    }
+
+    public function preinscripciones(Delegado $delegado){
+        $preinscripciones = $delegado->preinscripciones;
+        return new DelegadoResource($preinscripciones);
     }
 }

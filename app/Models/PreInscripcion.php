@@ -22,4 +22,8 @@ class PreInscripcion extends Model
         'fecha_preinscrip',
         'link_img_comprob',
     ];
+
+    public function delegado(){
+        return $this->belongsTo(Delegado::class,'cod_deleg');
+    }
 }

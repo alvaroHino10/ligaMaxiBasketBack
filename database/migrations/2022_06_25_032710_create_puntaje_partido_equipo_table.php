@@ -16,7 +16,7 @@ class CreatePuntajePartidoEquipoTable extends Migration
         Schema::create('puntaje_partido_equipo', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cod_part')->references('cod_part')->on('partido');
-            $table->foreignId('cod_equi')->references('cod_equi')->on('equipo');
+            $table->foreignId('cod_equi_data')->references('cod_equi_data')->on('equipo_data');
             $table->integer('puntaje_periodo_1')->default(0);
             $table->integer('puntaje_periodo_2')->default(0);
             $table->integer('puntaje_periodo_3')->default(0);

@@ -15,7 +15,7 @@ class CreateEntrenadorTable extends Migration
     {
         Schema::create('entrenador', function (Blueprint $table) {
             $table->id('cod_entren');
-            $table->foreignId('cod_equi')->references('cod_equi')->on('equipo');
+            $table->foreignId('cod_equi_data')->references('cod_equi_data')->on('equipo_data');
             $table->string('nombre_entren',80);
             $table->string('ap_entren',80);
             $table->string('num_iden_entren',20);

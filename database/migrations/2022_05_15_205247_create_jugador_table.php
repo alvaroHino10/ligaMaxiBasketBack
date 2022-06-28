@@ -15,7 +15,7 @@ class CreateJugadorTable extends Migration
     {
         Schema::create('jugador', function (Blueprint $table) {
             $table->id('cod_jug');
-            $table->foreignId('cod_equi')->references('cod_equi')->on('equipo');
+            $table->foreignId('cod_equi_data')->references('cod_equi_data')->on('equipo_data');
             $table->string('nombre_jug',80);
             $table->string('prim_ap_jug',80);
             $table->string('seg_ap_jug',80);
