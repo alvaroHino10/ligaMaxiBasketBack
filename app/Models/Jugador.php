@@ -32,7 +32,7 @@ class Jugador extends Model
         'link_img_jug'
     ];
 
-    public function equipo(){
+    public function equipoData(){
         return $this->belongsTo(EquipoData::class,'cod_equi_data');
     }
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EquipoDataRequest;
 use App\Http\Resources\EquipoDataResource;
-use App\Http\Resources\TorneoResource;
 use Illuminate\Http\Request;
 use App\Models\EquipoData;
 
@@ -39,10 +38,10 @@ class EquipoDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(EquipoData $equipo_data)
+    public function show(EquipoData $equipo_datum)
     {
         //
-        return new TorneoResource($equipo_data);
+        return new EquipoDataResource($equipo_datum);
     }
 
     /**
@@ -52,11 +51,11 @@ class EquipoDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EquipoDataRequest $request, EquipoData $equipo_data)
+    public function update(EquipoDataRequest $request, EquipoData $equipo_datum)
     {
         //
-        $equipo_data->update($request->all());
-        return (new EquipoDataResource($equipo_data))->additional(['mensaje' => 'Datos del equipo actualizados correctamente']);
+        $equipo_datum->update($request->all());
+        return (new EquipoDataResource($equipo_datum))->additional(['mensaje' => 'Datos del equipo actualizados correctamente']);
     }
 
     /**
@@ -65,10 +64,10 @@ class EquipoDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EquipoData $equipo_data)
+    public function destroy(EquipoData $equipo_datum)
     {
         //
-        $equipo_data->delete();
-        return (new EquipoDataResource($equipo_data))->additional(['mensaje' => 'Datos de equipo eliminados']);
+        $equipo_datum->delete();
+        return (new EquipoDataResource($equipo_datum))->additional(['mensaje' => 'Datos de equipo eliminados']);
     }
 }

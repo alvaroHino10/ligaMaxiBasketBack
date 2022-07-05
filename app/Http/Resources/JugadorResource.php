@@ -17,7 +17,7 @@ class JugadorResource extends JsonResource
         //return parent::toArray($request);
         return [
             'cod_jug' => $this->cod_jug,
-            'cod_equi' => $this->cod_equi,
+            'cod_equi_data' => $this->cod_equi_data,
             'nombre_jug' => $this->nombre_jug,
             'prim_ap_jug' => $this->prim_ap_jug,
             'seg_ap_jug' => $this->seg_ap_jug,

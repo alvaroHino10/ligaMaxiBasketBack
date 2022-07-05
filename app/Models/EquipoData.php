@@ -24,4 +24,8 @@ class EquipoData extends Model
     {
         return $this->hasMany(Jugador::class, 'cod_equi_data');
     }
+
+    public function equipo(){
+        return $this->belongsTo(Equipo::class, 'cod_equi');
+    }
 }

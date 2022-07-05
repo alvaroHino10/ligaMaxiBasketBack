@@ -35,23 +35,24 @@ class JugadorController extends Controller
     public function store(GuardarJugadorRequest $request)
     {
         $existe = false;
-        /*$codEquipoDataDelJugadorIngresado = $request->cod_equi;
-        $equipoJugador = EquipoData::find($codEquipoDataDelJugadorIngresado);
+        $codEquipoDataDelJugadorIngresado = $request->cod_equi_data;
+        $equipoDataJugador = EquipoData::find($codEquipoDataDelJugadorIngresado);
+        $equipoJugador = $equipoDataJugador->equipo;
 
         $torneo = $equipoJugador->torneo;
-        $listaEquipos = Torneo::find($torneo->cod_torn)->equipos;
+        $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
 
         $numIdenJugadorIngresado = $request->num_iden_jug;
         $nacionJugadorIngresado = $request->nacion_jug;
         foreach($listaEquipos as $equipo){
-            $listaJugadores = $equipo->jugadores;
+            $listaJugadores = $equipo->equipoData->jugadores;
             $jugadorExistente = $listaJugadores->where('num_iden_jug', $numIdenJugadorIngresado)
                                       ->where('nacion_jug', $nacionJugadorIngresado);
             if(!$jugadorExistente->isEmpty()){  
                 $existe = true;
                 break;
             }
-        } */
+        } 
 
         if (!$existe) {
             $data      = $request->all();
