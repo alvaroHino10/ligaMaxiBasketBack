@@ -23,13 +23,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('preinscripcion', PreInscripcionController::class);
     Route::apiResource('equipo', EquipoController::class);
     Route::apiResource('jugador', JugadorController::class);
-    Route::apiResource('partido', PartidoController::class);
-    Route::apiResource('control-partido', ControlPartidoController::class);
-    Route::get('torneo/{torneo}/equipos', [TorneoController::class, 'showEquiposTorneo']);
     Route::apiResource('torneo', TorneoController::class);
     Route::prefix('jugador/{jugador}')->group(function () {
         Route::put('/canasta_simple', [JugadorController::class, 'updateCanastaSimple']);
@@ -38,32 +35,18 @@ use Illuminate\Support\Facades\Route;
         Route::put('/faltas', [JugadorController::class, 'updateFaltas']);
         Route::get('/estadisticas', [JugadorController::class, 'getEstadisticasJugador']);
     });
+
+    Route::prefix('delegado/{delegado}')->group(function () {
+        Route::get('/preinscripciones', [DelegadoController::class, 'preinscripciones']);
+    });
     Route::delete('logout', [AuthController::class, 'logout']);
-});*/
+});
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']);
 Route::apiResource('delegado', DelegadoController::class);
-
-Route::apiResource('preinscripcion', PreInscripcionController::class);
-Route::apiResource('equipo', EquipoController::class);
-Route::apiResource('jugador', JugadorController::class);
+Route::apiResource('equipo_data', EquipoDataController::class);
 Route::apiResource('partido', PartidoController::class);
-Route::apiResource('control-partido', ControlPartidoController::class);
 Route::get('torneo/{torneo}/equipos', [TorneoController::class, 'showEquiposTorneo']);
-Route::apiResource('torneo', TorneoController::class);
-Route::apiResource('equipo_data',EquipoDataController::class);
-Route::prefix('jugador/{jugador}')->group(function () {
-    Route::put('/canasta_simple', [JugadorController::class, 'updateCanastaSimple']);
-    Route::put('/canasta_doble', [JugadorController::class, 'updateCanastaDoble']);
-    Route::put('/canasta_triple', [JugadorController::class, 'updateCanastaTriple']);
-    Route::put('/faltas', [JugadorController::class, 'updateFaltas']);
-    Route::get('/estadisticas', [JugadorController::class, 'getEstadisticasJugador']);
-});
-Route::put('equipo/{equipo}/aceptado',[EquipoController::class, 'updateAceptado']);
-
-Route::prefix('delegado/{delegado}')->group(function () {
-    Route::get('/preinscripciones', [DelegadoController::class, 'preinscripciones']);
-});
-
-Route::delete('logout', [AuthController::class, 'logout']);
+Route::put('equipo/{equipo}/aceptado', [EquipoController::class, 'updateAceptado']);
+Route::apiResource('control-partido', ControlPartidoController::class);

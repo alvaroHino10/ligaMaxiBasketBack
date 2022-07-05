@@ -29,17 +29,17 @@ class AuthController extends Controller
     {
         //
         $data = $request->all();
-        $data['password'] = bcrypt($request['password']);
+        //$data['password'] = bcrypt($request['password']);
         // Check email
         $user = User::where('email', $data['email'])->first();
-        if(!$user || !Hash::check($data['password'], $user->password)){
-        //    return response()->json(["mensaje" => "Credenciales invalidas"]);
-        //}
+        $match = password_verify($data['password'], $user->password);
+        if(!$user || !$match){
+            return response()->json(["mensaje" => "Credenciales invalidas"]);
+        }
         $token = $user->createToken('myapptoken')->plainTextToken;
         return (new AuthResource($user))
         ->additional(['token' => $token,
                         'mensaje' => 'Inicio de sesion exitoso']);
-        }
     }
 
     public function logout()

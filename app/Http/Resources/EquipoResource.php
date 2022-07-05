@@ -21,7 +21,8 @@ class EquipoResource extends JsonResource
             'cod_preinscrip' => $this->cod_preinscrip,
             'nombre_equi' => $this->nombre_equi,
             'categ_equi' => $this->categ_equi,
-            'aprobado_equi' => $this->aprobado_equi
+            'aprobado_equi' => $this->aprobado_equi,
+            'equipo_data' => $this->equipoData
         ];
     }
 }
