@@ -25,7 +25,7 @@ class AuthRequest extends FormRequest
     {
         return [
             'cod_deleg' => 'required',
-            'email' => 'required|email|string',
+            'email' => 'required|email|string|unique:users, email',
             'password' => 'required|confirmed|string'
         ];
     }

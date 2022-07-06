@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +39,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function invalidJson($request, ValidationException $exception){
+        return response()->json([
+            'respuesta' => __('Los datos proporcionados no son validos'),
+            'errores' => $exception->errors(),], $exception->status);        
+    }
+
+    public function render($request, Throwable $exception){
+        if ($exception instanceof RouteNotFoundException){
+            return response()->json(['error' => 'No tiene permisos para acceder a esta ruta'], 402);
+        }
+        return parent::render($request, $exception);
     }
 }
