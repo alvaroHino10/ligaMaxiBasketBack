@@ -15,7 +15,6 @@ class AuthController extends Controller
     
     public function signup(AuthRequest $request)
     {
-        //
         $data = $request->all();
         $data['password'] = bcrypt($request['password']);
         $user = User::create($data);
@@ -26,12 +25,11 @@ class AuthController extends Controller
 
     public function signin(LoginRequest $request)
     {
-        //
         $data = $request->all();
         // Check email
         $user = User::where('email', $data['email'])->first();
         $match = Hash::check($data['password'], $user->password);
-        if(! $user || ! $match){
+        if(! $user['email'] || ! $match){
             throw ValidationException::withMessages([
                 'mensaje' => ['Las credenciales son incorrectas.']
             ]);
@@ -44,7 +42,6 @@ class AuthController extends Controller
 
     public function logout()
     {
-        //
         request()->user()->currentAccessToken()->delete();
         return response()->json("Sesion cerrada exitosamente");
     }

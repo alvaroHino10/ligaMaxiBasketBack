@@ -17,6 +17,7 @@ class PartidoResource extends JsonResource
         return [
             'cod_part' => $this->cod_part,
             'fecha_part'=> $this->fecha_part,
+            'lugar_part' => $this->lugar_part,
             'hora_ini_part'=> $this->hora_ini_part,
             'hora_fin_part'=> $this->hora_fin_part
         ];
