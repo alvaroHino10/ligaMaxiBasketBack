@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GuardarPartidoRequest;
+use App\Http\Requests\ModificarPuntajePartidoRequest;
 use App\Http\Resources\PartidoResource;
+use App\Models\EquipoData;
 use App\Models\Partido;
 use Illuminate\Http\Request;
 
@@ -41,8 +43,7 @@ class PartidoController extends Controller
 
         $partido = Partido::create($datosPartido);
 
-        $partido->equipos()->attach($primerEquipo);
-        $partido->equipos()->attach($segundoEquipo);
+        $partido->equipos()->attach([$primerEquipo,$segundoEquipo]);
 
         $partido->controladoresPartido()->attach([$primerArbitro,$segundoArbitro,$fiscal,$mesa]);
         
@@ -83,5 +84,15 @@ class PartidoController extends Controller
     {
         $partido->delete();
         return (new PartidoResource($partido))->additional(['mensaje' => 'Partido eliminado']);
+    }
+
+    public function incrementarPuntaje(ModificarPuntajePartidoRequest $request, Partido $partido, EquipoData $equipo){
+        $datosPartido = $request->all();
+
+        $periodo = $datosPartido['periodo_especifico'];
+        $operacion = $datosPartido['operacion_canasta'];
+
+        $puntajePartido = $partido->equipos()->where('cod_equi_data',$equipo->cod_equi_data)->first()->pivot;
+        $puntajePartido->increment($periodo,$operacion);
     }
 }
