@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\guardarTorneoRequest;
 use App\Http\Resources\EquipoResource;
+use App\Http\Resources\PartidoResource;
 use App\Http\Resources\TorneoResource;
 use App\Models\Torneo;
 use Illuminate\Http\Request;
@@ -72,5 +73,17 @@ class TorneoController extends Controller
     public function showEquiposTorneo(Torneo $torneo){
         $listaEquipos = $torneo->equipos->where('aprobado_equi',true);
         return EquipoResource::collection($listaEquipos);
+    }
+
+    public function showPartidosTorneo(Torneo $torneo){
+        $listaEquipos =$torneo->equipos->where('aprobado_equi',true);
+        $listaPartidosTorneo = collect([]);
+        foreach($listaEquipos as $equipo){
+            $dataEquipo = $equipo->equipoData;
+            $listaPartidos = $dataEquipo->partidos()->get();
+            $listaPartidosTorneo = $listaPartidosTorneo->merge($listaPartidos); 
+        }
+        $listaPartidosUnicos = $listaPartidosTorneo->unique('cod_part');
+        return PartidoResource::collection($listaPartidosUnicos);
     }
 }
