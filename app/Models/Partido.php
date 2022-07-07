@@ -16,7 +16,7 @@ class Partido extends Model
     ];
     protected $fillable = [
         'fecha_part',
-        //'lugar_part',
+        'lugar_part',
         'hora_ini_part',
         'hora_fin_part'
     ];

@@ -71,12 +71,12 @@ class TorneoController extends Controller
     }
 
     public function showEquiposTorneo(Torneo $torneo){
-        $listaEquipos = $torneo->equipos->where('aprobado_equi',true);
+        $listaEquipos = $torneo->equipos;//->where('aprobado_equi',true);
         return EquipoResource::collection($listaEquipos);
     }
 
     public function showPartidosTorneo(Torneo $torneo){
-        $listaEquipos =$torneo->equipos->where('aprobado_equi',true);
+        $listaEquipos =$torneo->equipos;//->where('aprobado_equi',true);
         $listaPartidosTorneo = collect([]);
         foreach($listaEquipos as $equipo){
             $dataEquipo = $equipo->equipoData;

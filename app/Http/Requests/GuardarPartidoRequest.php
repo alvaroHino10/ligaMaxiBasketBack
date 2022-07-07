@@ -28,7 +28,7 @@ class GuardarPartidoRequest extends FormRequest
             'equipo_B' => 'required',
             'partido' => 'required|array',
             'partido.fecha_part'=> 'required',
-            //'partido.lugar_part' => 'required',
+            'partido.lugar_part' => 'required',
             'partido.hora_ini_part'=> 'required',
             'partido.hora_fin_part'=> 'required',
             'arbitro_1' => 'required',
