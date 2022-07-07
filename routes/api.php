@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::apiResource('preinscripcion', PreInscripcionController::class);
+    
+});
+Route::apiResource('preinscripcion', PreInscripcionController::class);
     Route::apiResource('equipo', EquipoController::class);
     Route::apiResource('jugador', JugadorController::class);
     Route::apiResource('torneo', TorneoController::class);
@@ -41,7 +43,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/preinscripciones', [DelegadoController::class, 'preinscripciones']);
     });
     Route::delete('logout', [AuthController::class, 'logout']);
-});
+
+
 Route::put('/partido/{partido}/equipo/{equipo}', [PartidoController::class, 'incrementarPuntaje']);
 
 Route::post('signup', [AuthController::class, 'signup']);
@@ -50,5 +53,6 @@ Route::apiResource('delegado', DelegadoController::class);
 Route::apiResource('equipo_data', EquipoDataController::class);
 Route::apiResource('partido', PartidoController::class);
 Route::get('torneo/{torneo}/equipos', [TorneoController::class, 'showEquiposTorneo']);
+Route::get('torneo/{torneo}/partidos', [TorneoController::class, 'showPartidosTorneo']);
 Route::put('equipo/{equipo}/aceptado', [EquipoController::class, 'updateAceptado']);
 Route::apiResource('control-partido', ControlPartidoController::class);
