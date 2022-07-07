@@ -27,10 +27,6 @@ class Equipo extends Model
         return $this->belongsTo(Torneo::class, 'cod_torn');
     }
 
-    public function partidos(){
-        return $this->belongsToMany(Partido::class,'puntaje_partido_equipo','cod_equi','cod_part');
-    }
-
     public function equipoData(){
         return $this->hasOne(EquipoData::class, 'cod_equi');
     }

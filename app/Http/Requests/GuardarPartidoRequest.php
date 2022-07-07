@@ -24,9 +24,17 @@ class GuardarPartidoRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_part'=> 'required',
-            'hora_ini_part'=> 'required',
-            'hora_fin_part'=> 'required'         
+            'equipo_A' => 'required',
+            'equipo_B' => 'required',
+            'partido' => 'required|array',
+            'partido.fecha_part'=> 'required',
+            'partido.lugar_part' => 'required',
+            'partido.hora_ini_part'=> 'required',
+            'partido.hora_fin_part'=> 'required',
+            'arbitro_1' => 'required',
+            'arbitro_2' => 'required',
+            'fiscal' => 'required',
+            'mesa' => 'required'
         ];
     }
 }

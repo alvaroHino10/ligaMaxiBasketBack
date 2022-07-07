@@ -20,7 +20,7 @@ class PreInscripcion extends Model
         'num_transfer_preinscrip',
         'costo_preinscrip',
         'fecha_preinscrip',
-        'link_img_comprob',
+        'link_img_comprob'
     ];
 
     public function delegado(){

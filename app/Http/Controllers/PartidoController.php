@@ -28,7 +28,23 @@ class PartidoController extends Controller
      */
     public function store(GuardarPartidoRequest $request)
     {
-        $partido = Partido::create($request->all());
+        $datosValidados = $request->all();
+        $datosPartido = $datosValidados['partido'];
+
+        $primerEquipo = $datosValidados['equipo_A'];
+        $segundoEquipo = $datosValidados['equipo_B'];
+
+        $primerArbitro = $datosValidados['arbitro_1'];
+        $segundoArbitro = $datosValidados['arbitro_2'];
+        $fiscal = $datosValidados['fiscal'];
+        $mesa = $datosValidados['mesa'];
+
+        $partido = Partido::create($datosPartido);
+
+        $partido->equipos()->attach($primerEquipo);
+        $partido->equipos()->attach($segundoEquipo);
+
+        $partido->controladoresPartido()->attach([$primerArbitro,$segundoArbitro,$fiscal,$mesa]);
         
         return (new PartidoResource($partido))->additional(['mensaje' => 'Partido registrado correctamente']);
     }
