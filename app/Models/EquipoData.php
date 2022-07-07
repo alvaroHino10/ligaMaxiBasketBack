@@ -19,8 +19,6 @@ class EquipoData extends Model
         'color_equi'
     ];
 
-    //protected $touches = ['partidos'];
-
     public function jugadores()
     {
         return $this->hasMany(Jugador::class, 'cod_equi_data');
@@ -31,10 +29,8 @@ class EquipoData extends Model
     }
 
     public function partidos(){
-        return $this->belongsToMany(Partido::class,'puntaje_partido_equipo','cod_equi_data','cod_part')->using(PuntajePartidoEquipo::class)->withTimestamps();
+        return $this->belongsToMany(Partido::class,'puntaje_partido_equipo','cod_equi_data','cod_part')
+        ->withPivot('puntaje_periodo_1', 'puntaje_periodo_2','puntaje_periodo_3','puntaje_periodo_4','puntaje_tiempo_extra')
+        ->withTimestamps();
     }
-
-   /* public function partidos(){
-        return $this->hasMany(PuntajePartidoEquipo::class, 'cod_equi');
-    }*/
 }

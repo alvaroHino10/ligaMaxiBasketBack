@@ -9,6 +9,7 @@ use App\Http\Controllers\EquipoDataController;
 use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\TorneoController;
+use App\Models\Partido;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::delete('logout', [AuthController::class, 'logout']);
 });
+Route::put('/partido/{partido}/equipo/{equipo}', [PartidoController::class, 'incrementarPuntaje']);
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']);
