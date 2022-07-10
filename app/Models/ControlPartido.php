@@ -28,6 +28,6 @@ class ControlPartido extends Model
     //protected $touches = ['partidos'];
 
     public function partidos(){
-        $this->belongsToMany(Partido::class, 'controla', 'cod_contr_part', 'cod_part')->withTimestamps();
+        return $this->belongsToMany(Partido::class, 'controla', 'cod_contr_part', 'cod_part')->withTimestamps();
     }
 }

@@ -19,6 +19,7 @@ class CreatePartidoTable extends Migration
             $table->string('lugar_part');
             $table->time('hora_ini_part');
             $table->time('hora_fin_part');
+            $table->boolean('part_finalizado')->default(false);
             $table->timestamps();
         });
     }

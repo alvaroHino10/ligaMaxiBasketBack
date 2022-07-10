@@ -79,10 +79,26 @@ class ControlPartidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Controlpartido $control_partido)
+    public function destroy(ControlPartido $control_partido)
     {
         $control_partido->delete();
         return (new ControlPartidoResource($control_partido))->
             additional(['mensaje' => $control_partido->rol_contr_part.' eliminado']);
+    }
+
+    public function verificarDisponibilidad($controlPartido, $fechaPart, $hora){
+        $ctrlPart = ControlPartido::find($controlPartido);
+        $partidosDelCtrlPart = $ctrlPart->partidos()->where('part_finalizado', false)->get();
+        $existePartido = $partidosDelCtrlPart->where('fecha_part',$fechaPart)
+        ->where('hora_ini_part','>', $hora->subHours(4)->toTimeString())
+        ->where('hora_ini_part','<',$hora->addHours(8)->toTimeString())->first();
+        if($existePartido == null){
+            $existe = false;
+            $mensaje = "";
+        }else{
+            $existe = true;
+            $mensaje = "El ".$ctrlPart->rol_contr_part." ".$ctrlPart->nombre_contr_part." ".$ctrlPart->prim_ap_contr_part." no esta disponible";
+        }
+        return [$existe,$mensaje];
     }
 }

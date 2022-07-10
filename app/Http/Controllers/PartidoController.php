@@ -8,6 +8,7 @@ use App\Http\Resources\PartidoResource;
 use App\Models\EquipoData;
 use App\Models\Partido;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PartidoController extends Controller
 {
@@ -41,13 +42,31 @@ class PartidoController extends Controller
         $fiscal = $datosValidados['fiscal'];
         $mesa = $datosValidados['mesa'];
 
-        $partido = Partido::create($datosPartido);
+        $fechaPartido = $datosPartido['fecha_part'];
+        $horaIniPartido = explode(':',$datosPartido['hora_ini_part']);
 
-        $partido->equipos()->attach([$primerEquipo,$segundoEquipo]);
-
-        $partido->controladoresPartido()->attach([$primerArbitro,$segundoArbitro,$fiscal,$mesa]);
         
-        return (new PartidoResource($partido))->additional(['mensaje' => 'Partido registrado correctamente']);
+        $arregloArbitros = [$primerArbitro,$segundoArbitro,$fiscal,$mesa];
+        $ctrlPartidoController = new ControlPartidoController;
+        $res = collect();
+        $permitido = true;
+        foreach($arregloArbitros as $arbitro){
+            $hora = Carbon::createFromTime($horaIniPartido[0],$horaIniPartido[1]);
+            $ocupado = $ctrlPartidoController->verificarDisponibilidad($arbitro, $fechaPartido, $hora);
+            if($ocupado[0]){
+                $permitido = false;
+                $res->push($ocupado[1]);
+            }
+        }
+        if($permitido){
+            $partido = Partido::create($datosPartido);
+            $partido->equipoDatas()->attach([$primerEquipo,$segundoEquipo]);
+            $partido->controladoresPartido()->attach([$primerArbitro,$segundoArbitro,$fiscal,$mesa]);
+        
+            return (new PartidoResource($partido))->additional(['mensaje' => 'Partido registrado correctamente']);
+        }else{
+            return response()->json($res);
+        }
     }
 
     /**
