@@ -18,7 +18,8 @@ class Partido extends Model
         'fecha_part',
         'lugar_part',
         'hora_ini_part',
-        'hora_fin_part'
+        'hora_fin_part',
+        'part_finalizado'
     ];
 
     public function equipoDatas(){

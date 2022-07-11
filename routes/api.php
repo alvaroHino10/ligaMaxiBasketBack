@@ -44,8 +44,10 @@ Route::apiResource('preinscripcion', PreInscripcionController::class);
     });
     Route::delete('logout', [AuthController::class, 'logout']);
 
-
-Route::put('/partido/{partido}/equipo/{equipo}', [PartidoController::class, 'incrementarPuntaje']);
+Route::prefix('partido/{partido}')->group(function(){
+    Route::get('puntajes',[PartidoController::class, 'showPuntajeEquipos']);
+    Route::put('/equipo/{equipo}', [PartidoController::class, 'incrementarPuntaje']);
+});
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']);
@@ -53,6 +55,8 @@ Route::apiResource('delegado', DelegadoController::class);
 Route::apiResource('equipo_data', EquipoDataController::class);
 Route::apiResource('partido', PartidoController::class);
 Route::get('torneo/{torneo}/equipos', [TorneoController::class, 'showEquiposTorneo']);
+Route::get('torneo/{torneo}/equiposPreInscritos', [TorneoController::class, 'showEquiposPreInscritos']);
+
 Route::get('torneo/{torneo}/partidos', [TorneoController::class, 'showPartidosTorneo']);
 Route::put('equipo/{equipo}/aceptado', [EquipoController::class, 'updateAceptado']);
 Route::apiResource('control-partido', ControlPartidoController::class);
