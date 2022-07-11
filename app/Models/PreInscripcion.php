@@ -26,4 +26,8 @@ class PreInscripcion extends Model
     public function delegado(){
         return $this->belongsTo(Delegado::class,'cod_deleg');
     }
+
+    public function equipos(){
+        return $this->hasMany(Equipo::class, 'cod_preinscrip');
+    }
 }

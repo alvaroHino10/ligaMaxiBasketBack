@@ -17,7 +17,6 @@ class PreInscripcionController extends Controller
     public function index()
     {
         $listaPreInscripciones = PreInscripcion::all();
-        //return response($listaPreInscripciones);
         return PreInscripcionResource::collection($listaPreInscripciones);
     }
 
@@ -36,13 +35,8 @@ class PreInscripcionController extends Controller
             $extension = $file->extension();
             $picture   = str_replace(' ', '_', $filename).'-'.rand().'_'.time().'.'.$extension;
             $path      = $file->storeAs('public/pre_inscripcion', $picture);
-            $data['link_img_comprob'] = $picture;
+            $data['link_img_comprob'] = asset('storage/pre_inscripcion/'.$picture);
         }
-        //PreInscripcion::create($data);
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Preinscripcion guardada con exito',
-        //], 201);
         return (new PreInscripcionResource(PreInscripcion::create($data))) -> additional(['mensaje' => 'Preinscripcion guardada con exito']);
     }
 
@@ -54,11 +48,6 @@ class PreInscripcionController extends Controller
      */
     public function show(PreInscripcion $preinscripcion)
     {
-        //$preInscripcion = PreInscripcion::find($id);
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'pre inscripcion' => $preInscripcion
-        //], 200);
         return new PreInscripcionResource($preinscripcion);
     }
 
@@ -71,13 +60,7 @@ class PreInscripcionController extends Controller
      */
     public function update(GuardarPreInscripcionRequest $request, PreInscripcion $preinscripcion)
     {
-        //dd($preinscripcion->cod_preinscrip);
         $preinscripcion->update($request->all());
-        //$preInscripcion = PreInscripcion::find($id)->update($request->all());
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Datos de la preinscripcion actualizados correctamente'
-        //], 201);
         return (new PreInscripcionResource($preinscripcion)) -> 
             additional(['mensaje' => 'Datos de la preinscripcion actualizados correctamente']);
     }
@@ -90,11 +73,6 @@ class PreInscripcionController extends Controller
      */
     public function destroy(PreInscripcion $preinscripcion)
     {
-        //$preInscripcion = PreInscripcion::find($id)->delete();
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Preinscripcion eliminada'
-        //], 200);
         $preinscripcion->delete();
         return (new PreInscripcionResource($preinscripcion))->
             additional(['mensaje' => 'Preinscripcion eliminada']);

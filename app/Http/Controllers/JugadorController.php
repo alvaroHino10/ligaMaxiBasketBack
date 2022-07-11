@@ -62,7 +62,7 @@ class JugadorController extends Controller
                 $extension = $file->extension();
                 $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
                 $path      = $file->storeAs('public/jugadores', $picture);
-                $data['link_img_jug'] = $picture;
+                $data['link_img_jug'] = asset('storage/jugadores/'.$picture);
             }
             $registrado = Jugador::create($data);
             Estadisticas::create([
@@ -88,13 +88,9 @@ class JugadorController extends Controller
      */
     public function show(Jugador $jugador)
     {
-        //$jugador = Jugador::find($id);
         $nombre_archivo = $jugador['link_img_jug'];
         $jugador['link_img_jug'] = asset(Storage::url('public/jugadores/'.$nombre_archivo));
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'jugador' => $jugador
-        //], 200);
+
         return (new JugadorResource($jugador))
             ->additional(['confirmacion' => true]);
     }
@@ -108,11 +104,6 @@ class JugadorController extends Controller
      */
     public function update(GuardarJugadorRequest $request, Jugador $jugador)
     {
-        //$jugador = Jugador::find($id)->update($request->all());
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Datos del jugador actualizados correctamente'
-        //], 201);
         $jugador->update($request->all());
         return (new JugadorResource($jugador))
             ->additional(['confirmacion' => true, 
@@ -127,11 +118,6 @@ class JugadorController extends Controller
      */
     public function destroy(Jugador $jugador)
     {
-        //$jugador = Jugador::find($id)->delete();
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Jugador eliminado'
-        //], 200);
         $jugador->delete();
         return (new JugadorResource($jugador))
             ->additional(['confirmacion' => true, 

@@ -40,7 +40,7 @@ class ControlPartidoController extends Controller
             $extension = $file->extension();
             $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
             $path      = $file->storeAs('public/control_partido', $picture);
-            $data['link_img_contr_part'] = $picture;
+            $data['link_img_contr_part'] = asset('storage/control_partido/'.$picture);
         }
         $controlPartido = ControlPartido::create($data);
         return (new ControlPartidoResource($controlPartido))->additional(['mensaje' => $request->rol_contr_part.' registrado correctamente']);

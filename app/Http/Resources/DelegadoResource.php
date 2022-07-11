@@ -14,7 +14,6 @@ class DelegadoResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
             'cod_deleg' => $this->cod_deleg,
             'nombre_deleg' => $this->nombre_deleg,

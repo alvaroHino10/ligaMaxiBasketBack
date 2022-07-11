@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\PreInscripcionResource;
 
 class EquipoResource extends JsonResource
 {
@@ -14,11 +15,10 @@ class EquipoResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
             'cod_equi' => $this->cod_equi,
             'cod_torn' => $this->cod_torn,
-            'cod_preinscrip' => $this->cod_preinscrip,
+            'preinscripcion' => new PreInscripcionResource($this->preinscripcion),
             'nombre_equi' => $this->nombre_equi,
             'categ_equi' => $this->categ_equi,
             'aprobado_equi' => $this->aprobado_equi,
