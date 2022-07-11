@@ -55,7 +55,7 @@ class TorneoController extends Controller
     public function update(Request $request, Torneo $torneo)
     {
         $torneo->update($request->all());
-        return (new TorneoResource($torneo))->additional(['mensaje' => 'Torneo actualizado correctamente']); 
+        return (new TorneoResource($torneo))->additional(['mensaje' => 'Torneo actualizado correctamente']);
     }
 
     /**
@@ -70,18 +70,27 @@ class TorneoController extends Controller
         return (new TorneoResource($torneo))->additional(['mensaje' => 'Torneo eliminado']);
     }
 
-    public function showEquiposTorneo(Torneo $torneo){
-        $listaEquipos = $torneo->equipos->where('aprobado_equi',true);
+    public function showEquiposTorneo(Torneo $torneo)
+    {
+        $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
+        $listaEquiposData = EquipoResource::collection($listaEquipos);
+        return $listaEquiposData;
+    }
+
+    public function showEquiposPreInscritos(Torneo $torneo)
+    {
+        $listaEquipos = $torneo->equipos->where('aprobado_equi', false);
         return EquipoResource::collection($listaEquipos);
     }
 
-    public function showPartidosTorneo(Torneo $torneo){
-        $listaEquipos =$torneo->equipos->where('aprobado_equi',true);
+    public function showPartidosTorneo(Torneo $torneo)
+    {
+        $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
         $listaPartidosTorneo = collect([]);
-        foreach($listaEquipos as $equipo){
+        foreach ($listaEquipos as $equipo) {
             $dataEquipo = $equipo->equipoData;
             $listaPartidos = $dataEquipo->partidos()->get();
-            $listaPartidosTorneo = $listaPartidosTorneo->merge($listaPartidos); 
+            $listaPartidosTorneo = $listaPartidosTorneo->merge($listaPartidos);
         }
         $listaPartidosUnicos = $listaPartidosTorneo->unique('cod_part');
         return PartidoResource::collection($listaPartidosUnicos);
