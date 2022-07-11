@@ -37,47 +37,53 @@ class JugadorController extends Controller
         $existe = false;
         $codEquipoDataDelJugadorIngresado = $request->cod_equi_data;
         $equipoDataJugador = EquipoData::find($codEquipoDataDelJugadorIngresado);
-        $equipoJugador = $equipoDataJugador->equipo;
+        if ($equipoDataJugador->cant_jug_equip < 15) {
+            $equipoJugador = $equipoDataJugador->equipo;
 
-        $torneo = $equipoJugador->torneo;
-        $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
+            $torneo = $equipoJugador->torneo;
+            $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
 
-        $numIdenJugadorIngresado = $request->num_iden_jug;
-        $nacionJugadorIngresado = $request->nacion_jug;
-        foreach($listaEquipos as $equipo){
-            $listaJugadores = $equipo->equipoData->jugadores;
-            $jugadorExistente = $listaJugadores->where('num_iden_jug', $numIdenJugadorIngresado)
-                                      ->where('nacion_jug', $nacionJugadorIngresado);
-            if(!$jugadorExistente->isEmpty()){  
-                $existe = true;
-                break;
+            $numIdenJugadorIngresado = $request->num_iden_jug;
+            $nacionJugadorIngresado = $request->nacion_jug;
+            foreach ($listaEquipos as $equipo) {
+                $listaJugadores = $equipo->equipoData->jugadores;
+                $jugadorExistente = $listaJugadores->where('num_iden_jug', $numIdenJugadorIngresado)
+                    ->where('nacion_jug', $nacionJugadorIngresado);
+                if (!$jugadorExistente->isEmpty()) {
+                    $existe = true;
+                    break;
+                }
             }
-        } 
 
-        if (!$existe) {
-            $data      = $request->all();
-            if ($request->hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()) {
-                $file      = $request->file('link_img_jug');
-                $filename  = $file->hashName();
-                $extension = $file->extension();
-                $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
-                $path      = $file->storeAs('public/jugadores', $picture);
-                $data['link_img_jug'] = asset('storage/jugadores/'.$picture);
-            }
-            $registrado = Jugador::create($data);
-            Estadisticas::create([
-                'cod_jug' => $registrado->cod_jug
-            ]);
-            return (new JugadorResource($registrado))
-                    ->additional(['confirmacion' => true,
-                                  'mensaje' => 'Jugador registrado correctamente'])
+            if (!$existe) {
+                $data      = $request->all();
+                if ($request->hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()) {
+                    $file      = $request->file('link_img_jug');
+                    $filename  = $file->hashName();
+                    $extension = $file->extension();
+                    $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
+                    $path      = $file->storeAs('public/jugadores', $picture);
+                    $data['link_img_jug'] = asset('storage/jugadores/' . $picture);
+                }
+                $registrado = Jugador::create($data);
+                Estadisticas::create([
+                    'cod_jug' => $registrado->cod_jug
+                ]);
+                return (new JugadorResource($registrado))
+                    ->additional([
+                        'confirmacion' => true,
+                        'mensaje' => 'Jugador registrado correctamente'
+                    ])
                     ->response()
                     ->setStatusCode(201);
-        } else {
-            return response()->json(['confirmacion' => false,
-                                     'mensaje' => 'Este jugador ya fue registrado anteriormente'])
-                   ->setStatusCode(401);
-        }      
+            } else {
+                return response()->json([
+                    'confirmacion' => false,
+                    'mensaje' => 'Superó el limite máximo de jugadores inscritos'
+                ])
+                    ->setStatusCode(401);
+            }
+        }
     }
 
     /**
@@ -89,7 +95,7 @@ class JugadorController extends Controller
     public function show(Jugador $jugador)
     {
         $nombre_archivo = $jugador['link_img_jug'];
-        $jugador['link_img_jug'] = asset(Storage::url('public/jugadores/'.$nombre_archivo));
+        $jugador['link_img_jug'] = asset(Storage::url('public/jugadores/' . $nombre_archivo));
 
         return (new JugadorResource($jugador))
             ->additional(['confirmacion' => true]);
@@ -106,8 +112,10 @@ class JugadorController extends Controller
     {
         $jugador->update($request->all());
         return (new JugadorResource($jugador))
-            ->additional(['confirmacion' => true, 
-                        'mensaje' => 'Datos del jugador actualizados correctamente']);
+            ->additional([
+                'confirmacion' => true,
+                'mensaje' => 'Datos del jugador actualizados correctamente'
+            ]);
     }
 
     /**
@@ -120,31 +128,38 @@ class JugadorController extends Controller
     {
         $jugador->delete();
         return (new JugadorResource($jugador))
-            ->additional(['confirmacion' => true, 
-                        'mensaje' => 'Jugador eliminado']);
+            ->additional([
+                'confirmacion' => true,
+                'mensaje' => 'Jugador eliminado'
+            ]);
     }
 
-    public function updateCanastaSimple(Jugador $jugador){
+    public function updateCanastaSimple(Jugador $jugador)
+    {
         $estadisticasJugador = $jugador->estadistica;
         $estadisticasJugador->increment('cant_cnsta_simple');
     }
 
-    public function updateCanastaDoble(Jugador $jugador){
+    public function updateCanastaDoble(Jugador $jugador)
+    {
         $estadisticasJugador = $jugador->estadistica;
         $estadisticasJugador->increment('cant_cnsta_doble');
     }
 
-    public function updateCanastaTriple(Jugador $jugador){
+    public function updateCanastaTriple(Jugador $jugador)
+    {
         $estadisticasJugador = $jugador->estadistica;
         $estadisticasJugador->increment('cant_cnsta_triple');
     }
 
-    public function updateFaltas(Jugador $jugador){
+    public function updateFaltas(Jugador $jugador)
+    {
         $estadisticasJugador = $jugador->estadistica;
         $estadisticasJugador->increment('faltas');
     }
 
-    public function getEstadisticasJugador(Jugador $jugador){
+    public function getEstadisticasJugador(Jugador $jugador)
+    {
         $estadisticasJugador = $jugador->estadistica;
         return new EstadisticasResource($estadisticasJugador);
     }
