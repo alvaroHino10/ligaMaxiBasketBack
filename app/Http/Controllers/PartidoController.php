@@ -111,7 +111,7 @@ class PartidoController extends Controller
         $periodo = $datosPartido['periodo_especifico'];
         $operacion = $datosPartido['operacion_canasta'];
 
-        $puntajePartido = $partido->equipos()->where('cod_equi_data',$equipo->cod_equi_data)->first()->pivot;
+        $puntajePartido = $partido->equipoDatas()->where('cod_equi_data',$equipo->cod_equi_data)->first()->pivot;
         $puntajePartido->increment($periodo,$operacion);
     }
 }
