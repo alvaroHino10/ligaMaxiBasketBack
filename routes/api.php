@@ -55,6 +55,8 @@ Route::apiResource('delegado', DelegadoController::class);
 Route::apiResource('equipo_data', EquipoDataController::class);
 Route::apiResource('partido', PartidoController::class);
 Route::get('torneo/{torneo}/equipos', [TorneoController::class, 'showEquiposTorneo']);
+Route::get('torneo/{torneo}/equiposPreInscritos', [TorneoController::class, 'showEquiposPreInscritos']);
+
 Route::get('torneo/{torneo}/partidos', [TorneoController::class, 'showPartidosTorneo']);
 Route::put('equipo/{equipo}/aceptado', [EquipoController::class, 'updateAceptado']);
 Route::apiResource('control-partido', ControlPartidoController::class);
