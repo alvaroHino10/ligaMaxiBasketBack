@@ -66,6 +66,7 @@ class JugadorController extends Controller
                     $data['link_img_jug'] = asset('storage/jugadores/' . $picture);
                 }
                 $registrado = Jugador::create($data);
+                $equipoDataJugador->increment('cant_jug_equip',1);
                 Estadisticas::create([
                     'cod_jug' => $registrado->cod_jug
                 ]);
