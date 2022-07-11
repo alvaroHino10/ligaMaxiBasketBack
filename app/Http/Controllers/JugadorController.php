@@ -37,47 +37,54 @@ class JugadorController extends Controller
         $existe = false;
         $codEquipoDataDelJugadorIngresado = $request->cod_equi_data;
         $equipoDataJugador = EquipoData::find($codEquipoDataDelJugadorIngresado);
-        $equipoJugador = $equipoDataJugador->equipo;
+        if($equipoDataJugador->cant_jug_equip < 15){
+            $equipoJugador = $equipoDataJugador->equipo;
 
-        $torneo = $equipoJugador->torneo;
-        $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
+            $torneo = $equipoJugador->torneo;
+            $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
 
-        $numIdenJugadorIngresado = $request->num_iden_jug;
-        $nacionJugadorIngresado = $request->nacion_jug;
-        foreach($listaEquipos as $equipo){
-            $listaJugadores = $equipo->equipoData->jugadores;
-            $jugadorExistente = $listaJugadores->where('num_iden_jug', $numIdenJugadorIngresado)
-                                      ->where('nacion_jug', $nacionJugadorIngresado);
-            if(!$jugadorExistente->isEmpty()){  
-                $existe = true;
-                break;
-            }
-        } 
+            $numIdenJugadorIngresado = $request->num_iden_jug;
+            $nacionJugadorIngresado = $request->nacion_jug;
+            foreach($listaEquipos as $equipo){
+                $listaJugadores = $equipo->equipoData->jugadores;
+                $jugadorExistente = $listaJugadores->where('num_iden_jug', $numIdenJugadorIngresado)
+                                        ->where('nacion_jug', $nacionJugadorIngresado);
+                if(!$jugadorExistente->isEmpty()){  
+                    $existe = true;
+                    break;
+                }
+            } 
 
-        if (!$existe) {
-            $data      = $request->all();
-            if ($request->hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()) {
-                $file      = $request->file('link_img_jug');
-                $filename  = $file->hashName();
-                $extension = $file->extension();
-                $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
-                $path      = $file->storeAs('public/jugadores', $picture);
-                $data['link_img_jug'] = $picture;
-            }
-            $registrado = Jugador::create($data);
-            Estadisticas::create([
-                'cod_jug' => $registrado->cod_jug
-            ]);
-            return (new JugadorResource($registrado))
-                    ->additional(['confirmacion' => true,
-                                  'mensaje' => 'Jugador registrado correctamente'])
-                    ->response()
-                    ->setStatusCode(201);
-        } else {
+            if (!$existe) {
+                $data      = $request->all();
+                if ($request->hasFile('link_img_jug') && $request->file('link_img_jug')->isValid()) {
+                    $file      = $request->file('link_img_jug');
+                    $filename  = $file->hashName();
+                    $extension = $file->extension();
+                    $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
+                    $path      = $file->storeAs('public/jugadores', $picture);
+                    $data['link_img_jug'] = $picture;
+                }
+                $registrado = Jugador::create($data);
+                $equipoDataJugador->increment('cant_jug_equip',1);
+                Estadisticas::create([
+                    'cod_jug' => $registrado->cod_jug
+                ]);
+                return (new JugadorResource($registrado))
+                        ->additional(['confirmacion' => true,
+                                    'mensaje' => 'Jugador registrado correctamente'])
+                        ->response()
+                        ->setStatusCode(201);
+            } else {
+                return response()->json(['confirmacion' => false,
+                                        'mensaje' => 'Este jugador ya fue registrado anteriormente'])
+                    ->setStatusCode(401);
+            }   
+        }else{
             return response()->json(['confirmacion' => false,
-                                     'mensaje' => 'Este jugador ya fue registrado anteriormente'])
-                   ->setStatusCode(401);
-        }      
+                                        'mensaje' => 'Superó el limite máximo de jugadores inscritos'])
+                    ->setStatusCode(401);
+        }
     }
 
     /**
