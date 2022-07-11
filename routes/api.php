@@ -44,8 +44,10 @@ Route::apiResource('preinscripcion', PreInscripcionController::class);
     });
     Route::delete('logout', [AuthController::class, 'logout']);
 
-
-Route::put('/partido/{partido}/equipo/{equipo}', [PartidoController::class, 'incrementarPuntaje']);
+Route::prefix('partido/{partido}')->group(function(){
+    Route::get('puntajes',[PartidoController::class, 'showPuntajeEquipos']);
+    Route::put('/equipo/{equipo}', [PartidoController::class, 'incrementarPuntaje']);
+});
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']);

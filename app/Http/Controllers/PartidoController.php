@@ -110,8 +110,22 @@ class PartidoController extends Controller
 
         $periodo = $datosPartido['periodo_especifico'];
         $operacion = $datosPartido['operacion_canasta'];
-
-        $puntajePartido = $partido->equipoDatas()->where('cod_equi_data',$equipo->cod_equi_data)->first()->pivot;
+        $puntajePartido = $partido->equipoDatas->where('cod_equi_data',$equipo->cod_equi_data)->first()->pivot;
         $puntajePartido->increment($periodo,$operacion);
+    }
+
+    public function showPuntajeEquipos(Partido $partido){
+        $equiposRivales = $partido->equipoDatas;
+        $puntajesEquipos = $equiposRivales->map(function($key, $value){
+            $equipo = $key->pivot;
+            return ["cod_equi_data" => $equipo->cod_equi_data,
+                    'puntaje_periodo_1' => $equipo->puntaje_periodo_1,
+                    'puntaje_periodo_2' => $equipo->puntaje_periodo_2,
+                    'puntaje_periodo_3' => $equipo->puntaje_periodo_3,
+                    'puntaje_periodo_4' => $equipo->puntaje_periodo_4,
+                    'puntaje_tiempo_extra' => $equipo->puntaje_tiempo_extra
+                ];
+        });
+        return response()->json($puntajesEquipos);
     }
 }
