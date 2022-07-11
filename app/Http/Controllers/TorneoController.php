@@ -89,8 +89,10 @@ class TorneoController extends Controller
         $listaPartidosTorneo = collect([]);
         foreach ($listaEquipos as $equipo) {
             $dataEquipo = $equipo->equipoData;
-            $listaPartidos = $dataEquipo->partidos()->get();
-            $listaPartidosTorneo = $listaPartidosTorneo->merge($listaPartidos);
+            if (!$dataEquipo == null) {
+                $listaPartidos = $dataEquipo->partidos()->get();
+                $listaPartidosTorneo = $listaPartidosTorneo->merge($listaPartidos);
+            }
         }
         $listaPartidosUnicos = $listaPartidosTorneo->unique('cod_part');
         return PartidoResource::collection($listaPartidosUnicos);

@@ -22,7 +22,7 @@ class EquipoResource extends JsonResource
             'nombre_equi' => $this->nombre_equi,
             'categ_equi' => $this->categ_equi,
             'aprobado_equi' => $this->aprobado_equi,
-            'equipo_data' => $this->when($this->equipoData !== null, $this->equipoData)
+            'equipo_data' => $this->equipoData
         ];
     }
 }
