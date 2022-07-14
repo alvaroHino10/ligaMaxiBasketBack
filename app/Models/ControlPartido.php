@@ -24,4 +24,10 @@ class ControlPartido extends Model
         'link_img_contr_part',
         'rol_contr_part'
     ];
+
+    //protected $touches = ['partidos'];
+
+    public function partidos(){
+        return $this->belongsToMany(Partido::class, 'controla', 'cod_contr_part', 'cod_part')->withTimestamps();
+    }
 }

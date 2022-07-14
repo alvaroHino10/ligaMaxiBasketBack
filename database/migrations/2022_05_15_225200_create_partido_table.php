@@ -16,8 +16,10 @@ class CreatePartidoTable extends Migration
         Schema::create('partido', function (Blueprint $table) {
             $table->id('cod_part');
             $table->date('fecha_part');
+            $table->string('lugar_part');
             $table->time('hora_ini_part');
             $table->time('hora_fin_part');
+            $table->boolean('part_finalizado')->default(false);
             $table->timestamps();
         });
     }

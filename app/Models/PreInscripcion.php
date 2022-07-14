@@ -20,10 +20,14 @@ class PreInscripcion extends Model
         'num_transfer_preinscrip',
         'costo_preinscrip',
         'fecha_preinscrip',
-        'link_img_comprob',
+        'link_img_comprob'
     ];
 
     public function delegado(){
         return $this->belongsTo(Delegado::class,'cod_deleg');
+    }
+
+    public function equipos(){
+        return $this->hasMany(Equipo::class, 'cod_preinscrip');
     }
 }

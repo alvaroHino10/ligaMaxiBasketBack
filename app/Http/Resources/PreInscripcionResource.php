@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class PreInscripcionResource extends JsonResource
 {
@@ -20,9 +21,8 @@ class PreInscripcionResource extends JsonResource
             'num_transfer_preinscrip' => $this->num_transfer_preinscrip,
             'costo_preinscrip' => $this->costo_preinscrip,
             'fecha_preinscrip' => $this->fecha_preinscrip,
-            'link_img_comprob' => $this->link_img_comprob,
+            'link_img_comprob' => $this->link_img_comprob
         ];
-        //return parent::toArray($request);
     }
 
     public function with($request){

@@ -8,43 +8,40 @@ use App\Http\Resources\AuthResource;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     
     public function signup(AuthRequest $request)
     {
-        //
         $data = $request->all();
         $data['password'] = bcrypt($request['password']);
         $user = User::create($data);
-        $token = $user->createToken('myapptoken')->plainTextToken;
         return (new AuthResource($user))
-        ->additional(['token' => $token,
-                        'mensaje' => 'Usuario registrado']);
+        ->additional(['mensaje' => 'Usuario registrado']);
          
     }
 
     public function signin(LoginRequest $request)
     {
-        //
         $data = $request->all();
-        $data['password'] = bcrypt($request['password']);
         // Check email
         $user = User::where('email', $data['email'])->first();
-        if(!$user || !Hash::check($data['password'], $user->password)){
-        //    return response()->json(["mensaje" => "Credenciales invalidas"]);
-        //}
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $match = Hash::check($data['password'], $user->password);
+        if(! $user['email'] || ! $match){
+            throw ValidationException::withMessages([
+                'mensaje' => ['Las credenciales son incorrectas.']
+            ]);
+        }
+        $token = $user->createToken($request->email)->plainTextToken;
         return (new AuthResource($user))
         ->additional(['token' => $token,
                         'mensaje' => 'Inicio de sesion exitoso']);
-        }
     }
 
     public function logout()
     {
-        //
         request()->user()->currentAccessToken()->delete();
         return response()->json("Sesion cerrada exitosamente");
     }

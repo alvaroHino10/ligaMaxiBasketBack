@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\guardarTorneoRequest;
 use App\Http\Resources\EquipoResource;
+use App\Http\Resources\PartidoResource;
 use App\Http\Resources\TorneoResource;
 use App\Models\Torneo;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class TorneoController extends Controller
     public function update(Request $request, Torneo $torneo)
     {
         $torneo->update($request->all());
-        return (new TorneoResource($torneo))->additional(['mensaje' => 'Torneo actualizado correctamente']); 
+        return (new TorneoResource($torneo))->additional(['mensaje' => 'Torneo actualizado correctamente']);
     }
 
     /**
@@ -69,8 +70,31 @@ class TorneoController extends Controller
         return (new TorneoResource($torneo))->additional(['mensaje' => 'Torneo eliminado']);
     }
 
-    public function showEquiposTorneo(Torneo $torneo){
-        $listaEquipos = $torneo->equipos->where('aprobado_equi',true);
+    public function showEquiposTorneo(Torneo $torneo)
+    {
+        $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
+        $listaEquiposData = EquipoResource::collection($listaEquipos);
+        return $listaEquiposData;
+    }
+
+    public function showEquiposPreInscritos(Torneo $torneo)
+    {
+        $listaEquipos = $torneo->equipos->where('aprobado_equi', false);
         return EquipoResource::collection($listaEquipos);
+    }
+
+    public function showPartidosTorneo(Torneo $torneo)
+    {
+        $listaEquipos = $torneo->equipos->where('aprobado_equi', true);
+        $listaPartidosTorneo = collect([]);
+        foreach ($listaEquipos as $equipo) {
+            $dataEquipo = $equipo->equipoData;
+            if (!$dataEquipo == null) {
+                $listaPartidos = $dataEquipo->partidos()->get();
+                $listaPartidosTorneo = $listaPartidosTorneo->merge($listaPartidos);
+            }
+        }
+        $listaPartidosUnicos = $listaPartidosTorneo->unique('cod_part');
+        return PartidoResource::collection($listaPartidosUnicos);
     }
 }

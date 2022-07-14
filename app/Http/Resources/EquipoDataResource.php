@@ -20,6 +20,7 @@ class EquipoDataResource extends JsonResource
             'pais_equi' => $this->pais_equi, 
             'discip_equi' => $this->discip_equi,
             'color_equi' => $this->color_equi,
+            'cant_jug_equi' => $this->cant_jug_equip,
             'jugadores' => $this->jugadores
         ];
     }

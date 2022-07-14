@@ -6,6 +6,7 @@ use App\Http\Requests\GuardarDelegadoRequest;
 use App\Http\Resources\DelegadoResource;
 use App\Http\Resources\PreInscripcionResource;
 use App\Models\Delegado;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class DelegadoController extends Controller
@@ -30,10 +31,6 @@ class DelegadoController extends Controller
      */
     public function store(GuardarDelegadoRequest $request)
     {
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Delegado guardado correctamente'
-        //],201);
         $data      = $request->all();
         if ($request->hasFile('link_img_deleg') && $request->file('link_img_deleg')->isValid()) {
             $file      = $request->file('link_img_deleg');
@@ -41,7 +38,7 @@ class DelegadoController extends Controller
             $extension = $file->extension();
             $picture   = str_replace(' ', '_', $filename) . '-' . rand() . '_' . time() . '.' . $extension;
             $path      = $file->storeAs('public/delegados', $picture);
-            $data['link_img_deleg'] = $picture;
+            $data['link_img_deleg'] = asset('storage/deleagos/'.$picture);
         }
         return (new DelegadoResource(Delegado::create($data))) ->additional(['mensaje' => 'Delegado guardado correctamente']);
     }
@@ -54,11 +51,6 @@ class DelegadoController extends Controller
      */
     public function show(Delegado $delegado)
     {
-        //$delegado = Delegado::find($id);
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'delegado' => $delegado
-        //],200);
         return new DelegadoResource($delegado);
     }
 
@@ -71,11 +63,6 @@ class DelegadoController extends Controller
      */
     public function update(GuardarDelegadoRequest $request, Delegado $delegado)
     {
-        //$delegado = Delegado::find($id)->update($request->all());
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Datos del delegado actualizados correctamente'
-        //],201);
         $delegado->update($request->all());
         return (new DelegadoResource($delegado))->
             additional(['mensaje' => 'Datos del delegado actualizados correctamente']);
@@ -89,11 +76,6 @@ class DelegadoController extends Controller
      */
     public function destroy(Delegado $delegado)
     {
-        //$delegado = Delegado::find($id)->delete();
-        //return response()->json([
-        //    'confirmacion' => true,
-        //    'mensaje' => 'Delegado eliminado'
-        //],200);
         $delegado->delete();
         return (new DelegadoResource($delegado))->
             additional(['mensaje' => 'Delegado eliminado']);
@@ -101,6 +83,7 @@ class DelegadoController extends Controller
 
     public function preinscripciones(Delegado $delegado){
         $preinscripciones = $delegado->preinscripciones;
-        return PreInscripcionResource::collection($preinscripciones);
+        $preinscrip = PreInscripcionResource::collection($preinscripciones);
+        return $preinscrip;
     }
 }
